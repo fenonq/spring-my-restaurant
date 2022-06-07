@@ -4,6 +4,8 @@ import com.fenonq.spring.myrestaurant.model.enums.Roles;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,5 +39,11 @@ public class Account extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     private Roles role;
+
+    @ManyToMany
+    @JoinTable(name = "customer_cart",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "dish_id"))
+    private List<Dish> cart = new ArrayList<>();
 
 }

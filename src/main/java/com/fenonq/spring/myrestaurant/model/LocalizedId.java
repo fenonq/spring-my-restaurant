@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Embeddable
 public class LocalizedId implements Serializable {
 

@@ -5,9 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 @Getter
@@ -23,6 +21,14 @@ public class Dish extends BaseEntity {
 
     @Column(name = "weight")
     private int weight;
+
+    @Lob
+    @Column(name = "image")
+    private Byte[] image;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @OneToMany(mappedBy = "dish", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     @MapKey(name = "localizedId.locale")

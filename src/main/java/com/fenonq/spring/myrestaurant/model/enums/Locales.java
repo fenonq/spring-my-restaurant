@@ -1,4 +1,4 @@
-package com.fenonq.spring.myrestaurant.model;
+package com.fenonq.spring.myrestaurant.model.enums;
 
 public enum Locales {
     EN(1),

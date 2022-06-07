@@ -11,22 +11,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString(exclude = "dish")
 @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-public class LocalizedDish {
+public class LocalizedCategory {
 
     @EmbeddedId
     private LocalizedId localizedId;
 
-    @ManyToOne
-    @MapsId("id")
-    @JoinColumn(name = "dish_id")
-    private Dish dish;
-
     @Column(name = "name")
     private String name;
 
-    @Lob
-    @Column(name = "description")
-    private String description;
+    @ManyToOne
+    @MapsId("id")
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 }

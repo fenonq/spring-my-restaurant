@@ -7,8 +7,6 @@ import com.fenonq.spring.myrestaurant.repositories.DishRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.HashSet;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -28,14 +26,11 @@ public class DataLoader implements CommandLineRunner {
                         .builder()
                         .price(123)
                         .weight(321)
-                        .localizations(new HashMap<>())
                         .build();
 
         Category category =
                 Category
                         .builder()
-                        .localizations(new HashMap<>())
-                        .dishes(new HashSet<>())
                         .build();
 
         LocalizedCategory localizedCategory1 =

@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@ToString
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class LocalizedCategory {

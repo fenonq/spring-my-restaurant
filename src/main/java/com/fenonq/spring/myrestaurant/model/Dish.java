@@ -16,6 +16,16 @@ import java.util.Map;
 @Entity
 public class Dish extends BaseEntity {
 
+    @Builder
+    public Dish(Long id, int price, int weight, Byte[] image, Category category, Map<String, LocalizedDish> localizations) {
+        super(id);
+        this.price = price;
+        this.weight = weight;
+        this.image = image;
+        this.category = category;
+        this.localizations = localizations;
+    }
+
     @Column(name = "price")
     private int price;
 

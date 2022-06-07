@@ -10,8 +10,9 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Builder
 @ToString(exclude = "dish")
+@Entity
 @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class LocalizedDish {
 
@@ -30,3 +31,4 @@ public class LocalizedDish {
     @Column(name = "description")
     private String description;
 }
+

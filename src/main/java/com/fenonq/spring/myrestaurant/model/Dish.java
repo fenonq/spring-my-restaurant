@@ -17,13 +17,12 @@ import java.util.Map;
 public class Dish extends BaseEntity {
 
     @Builder
-    public Dish(Long id, int price, int weight, Byte[] image, Category category, Map<String, LocalizedDish> localizations) {
+    public Dish(Long id, int price, int weight, Byte[] image, Category category) {
         super(id);
         this.price = price;
         this.weight = weight;
         this.image = image;
         this.category = category;
-        this.localizations = localizations;
     }
 
     @Column(name = "price")

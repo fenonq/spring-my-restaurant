@@ -19,11 +19,9 @@ import java.util.Set;
 public class Category extends BaseEntity {
 
     @Builder
-    public Category(Long id, Byte[] image, Set<Dish> dishes, Map<String, LocalizedCategory> localizations) {
+    public Category(Long id, Byte[] image) {
         super(id);
         this.image = image;
-        this.dishes = dishes;
-        this.localizations = localizations;
     }
 
     @Lob

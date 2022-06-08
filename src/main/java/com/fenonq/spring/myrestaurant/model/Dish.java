@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Getter
@@ -42,6 +43,6 @@ public class Dish extends BaseEntity {
     @OneToMany(mappedBy = "dish", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     @MapKey(name = "localizedId.locale")
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    private Map<String, LocalizedDish> localizations = new HashMap<>();
+    private Map<Locale, LocalizedDish> localizations = new HashMap<>();
 
 }

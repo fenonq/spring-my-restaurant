@@ -1,13 +1,13 @@
 package com.fenonq.spring.myrestaurant.bootstrap;
 
 import com.fenonq.spring.myrestaurant.model.*;
-import com.fenonq.spring.myrestaurant.model.enums.Locales;
 import com.fenonq.spring.myrestaurant.model.enums.Roles;
 import com.fenonq.spring.myrestaurant.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 
 @Component
@@ -31,6 +31,9 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        Locale ua = Locale.forLanguageTag("uk-UA");
+        Locale en = Locale.UK;
+        
         Account customer =
                 Account
                         .builder()
@@ -61,20 +64,20 @@ public class DataLoader implements CommandLineRunner {
         LocalizedStatus localizedStatus1 =
                 LocalizedStatus
                         .builder()
-                        .localizedId(new LocalizedId(Locales.EN.toString()))
+                        .localizedId(new LocalizedId(en))
                         .name("EnStatus")
                         .status(status)
                         .build();
-        status.getLocalizations().put(Locales.EN.toString(), localizedStatus1);
+        status.getLocalizations().put(en, localizedStatus1);
 
         LocalizedStatus localizedStatus2 =
                 LocalizedStatus
                         .builder()
-                        .localizedId(new LocalizedId(Locales.UA.toString()))
+                        .localizedId(new LocalizedId(ua))
                         .name("UaStatus")
                         .status(status)
                         .build();
-        status.getLocalizations().put(Locales.UA.toString(), localizedStatus2);
+        status.getLocalizations().put(ua, localizedStatus2);
 
         statusService.save(status);
 
@@ -93,40 +96,40 @@ public class DataLoader implements CommandLineRunner {
         LocalizedCategory localizedCategory1 =
                 LocalizedCategory
                         .builder()
-                        .localizedId(new LocalizedId(Locales.EN.toString()))
+                        .localizedId(new LocalizedId(en))
                         .name("EnCategory")
                         .category(category)
                         .build();
-        category.getLocalizations().put(Locales.EN.toString(), localizedCategory1);
+        category.getLocalizations().put(en, localizedCategory1);
 
         LocalizedCategory localizedCategory2 =
                 LocalizedCategory
                         .builder()
-                        .localizedId(new LocalizedId(Locales.UA.toString()))
+                        .localizedId(new LocalizedId(ua))
                         .name("UaCategory")
                         .category(category)
                         .build();
-        category.getLocalizations().put(Locales.UA.toString(), localizedCategory2);
+        category.getLocalizations().put(ua, localizedCategory2);
 
         LocalizedDish localizedDish1 =
                 LocalizedDish
                         .builder()
-                        .localizedId(new LocalizedId(Locales.EN.toString()))
+                        .localizedId(new LocalizedId(en))
                         .name("EnDish")
                         .description("EnDesc")
                         .dish(dish)
                         .build();
-        dish.getLocalizations().put(Locales.EN.toString(), localizedDish1);
+        dish.getLocalizations().put(en, localizedDish1);
 
         LocalizedDish localizedDish2 =
                 LocalizedDish
                         .builder()
-                        .localizedId(new LocalizedId(Locales.UA.toString()))
+                        .localizedId(new LocalizedId(ua))
                         .name("UaDish")
                         .description("UaDesc")
                         .dish(dish)
                         .build();
-        dish.getLocalizations().put(Locales.UA.toString(), localizedDish2);
+        dish.getLocalizations().put(ua, localizedDish2);
 
         category.getDishes().add(dish);
         dish.setCategory(category);

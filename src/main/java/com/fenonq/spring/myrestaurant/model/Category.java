@@ -5,10 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -33,5 +30,5 @@ public class Category extends BaseEntity {
     @OneToMany(mappedBy = "category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     @MapKey(name = "localizedId.locale")
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    private Map<String, LocalizedCategory> localizations = new HashMap<>();
+    private Map<Locale, LocalizedCategory> localizations = new HashMap<>();
 }

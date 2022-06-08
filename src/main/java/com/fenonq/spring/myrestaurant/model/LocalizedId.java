@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -14,9 +15,9 @@ import java.io.Serializable;
 public class LocalizedId implements Serializable {
 
     private Long id;
-    private String locale;
+    private Locale locale;
 
-    public LocalizedId(String locale) {
+    public LocalizedId(Locale locale) {
         this.locale = locale;
     }
 

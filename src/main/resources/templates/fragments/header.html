@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript" th:src="@{js/language-select.js}" defer></script>
+    <link rel="stylesheet" th:href="@{css/header.css}">
+
+</head>
+<body>
+<header th:fragment="header" class="header">
+    <a class="main_page_link nav_item nav__link" th:href="@{/menu}">MyRestaurant</a>
+
+    <ul class="nav">
+        <li class="nav_item">
+            <a class="nav__link" th:href="@{/test}">test</a>
+        </li>
+        <li class="nav_item">
+            <a class="nav__link" th:href="@{/test}">test1</a>
+        </li>
+
+        <li class="locale_item">
+            <form class="event-listener-form">
+                <select name="lang" class="form-select">
+                    <option th:each="language : ${languages}" th:value="${language}"
+                            th:selected="${#locale == language}"
+                            th:text="${language.getLanguage().toUpperCase()}"
+                            class="option">Option
+                    </option>
+                </select>
+            </form>
+        </li>
+    </ul>
+</header>
+
+
+</body>
+</html>

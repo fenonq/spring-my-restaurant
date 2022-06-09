@@ -3,6 +3,8 @@ package com.fenonq.spring.myrestaurant.services.impl;
 import com.fenonq.spring.myrestaurant.model.Dish;
 import com.fenonq.spring.myrestaurant.repositories.DishRepository;
 import com.fenonq.spring.myrestaurant.services.DishService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -42,5 +44,10 @@ public class DishServiceImpl implements DishService {
     @Override
     public void deleteById(Long id) {
         dishRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Dish> findAll(Pageable pageable) {
+        return dishRepository.findAll(pageable);
     }
 }

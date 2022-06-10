@@ -1,6 +1,8 @@
 package com.fenonq.spring.myrestaurant.services.impl;
 
+import com.fenonq.spring.myrestaurant.model.Category;
 import com.fenonq.spring.myrestaurant.model.Dish;
+import com.fenonq.spring.myrestaurant.repositories.CategoryRepository;
 import com.fenonq.spring.myrestaurant.repositories.DishRepository;
 import com.fenonq.spring.myrestaurant.services.DishService;
 import org.springframework.data.domain.Page;
@@ -14,9 +16,11 @@ import java.util.Set;
 public class DishServiceImpl implements DishService {
 
     private final DishRepository dishRepository;
+    private final CategoryRepository categoryRepository;
 
-    public DishServiceImpl(DishRepository dishRepository) {
+    public DishServiceImpl(DishRepository dishRepository, CategoryRepository categoryRepository) {
         this.dishRepository = dishRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -49,5 +53,11 @@ public class DishServiceImpl implements DishService {
     @Override
     public Page<Dish> findAll(Pageable pageable) {
         return dishRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Dish> findAllByCategory(Long id, Pageable pageable) {
+        Category category = categoryRepository.findById(id).orElse(null);
+        return dishRepository.findAllByCategory(category, pageable);
     }
 }

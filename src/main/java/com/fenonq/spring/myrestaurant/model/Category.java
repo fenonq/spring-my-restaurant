@@ -11,7 +11,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "localizations")
 @Entity
 public class Category extends BaseEntity {
 

@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-public class DishController {
+public class MenuController {
 
     private final DishService dishService;
     private final CategoryService categoryService;
 
-    public DishController(DishService dishService, CategoryService categoryService) {
+    public MenuController(DishService dishService, CategoryService categoryService) {
         this.dishService = dishService;
         this.categoryService = categoryService;
     }

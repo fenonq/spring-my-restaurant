@@ -1,6 +1,5 @@
 package com.fenonq.spring.myrestaurant.controllers;
 
-import com.fenonq.spring.myrestaurant.model.Category;
 import com.fenonq.spring.myrestaurant.model.Dish;
 import com.fenonq.spring.myrestaurant.services.CategoryService;
 import com.fenonq.spring.myrestaurant.services.DishService;
@@ -14,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Base64;
 
 @Controller
 public class MenuController {
@@ -30,7 +30,7 @@ public class MenuController {
     public String menu(Model model,
                        @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, value = 8) Pageable pageable,
                        @RequestParam(required = false) Long categoryId) {
-
+        model.addAttribute("encoder", Base64.class);
         model.addAttribute("languages", Constants.languages);
         model.addAttribute("dishProperties", Constants.dishProperties);
         model.addAttribute("categories", categoryService.findAll());

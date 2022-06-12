@@ -13,7 +13,7 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "category")
+@ToString(exclude = "category", callSuper = true)
 @Entity
 public class Dish extends BaseEntity {
 

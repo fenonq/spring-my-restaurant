@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head-links :: head-links}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<!--/*@thymesVar id="encoder" type="java.util.Base64"*/-->
+
+<div th:insert="~{fragments/header :: header}"></div>
+<div class="create_category_wrapper">
+
+    <form method="post" enctype="multipart/form-data" th:action="@{/dish}">
+        <div th:object="${dish}">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{image}"/>
+            <input type="number" min="1" th:placeholder="#{account.settings.redactor.dish.table.price}"
+                   th:field="*{price}"/>
+            <input type="number" min="1" th:placeholder="#{account.settings.redactor.dish.table.weight}"
+                   th:field="*{weight}"/>
+
+            <select name="categoryId" class="filter-select">
+                <option th:each="category : ${categories}"
+                        th:text="${category.localizations.get(#locale)} ?
+                            ${category.localizations.get(#locale).name} :
+                            ${category.localizations.get(languages[0]).name}"
+                        th:value="${category.id}"
+                        th:selected="${dish.category==null ?
+                            category.id==1 :
+                            category.id.toString()==dish.category.id.toString()}">
+                </option>
+            </select>
+        </div>
+
+
+        <div th:object="${form}">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th th:text="#{account.settings.redactor.dish.table.name}">Name</th>
+                    <th th:text="#{account.settings.redactor.dish.table.description}">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div class="localization_input">
+                    <tr th:each="localizedDish, itemStat : ${localizedDishList}">
+                        <td th:text="${languages[__${itemStat.index}__].getDisplayLanguage()}"></td>
+                        <td><textarea th:field="*{localizedDishList[__${itemStat.index}__].name}"
+                                      rows="4" cols="22" th:required="${itemStat.index == 0}"></textarea>
+                        </td>
+                        <td><textarea th:field="*{localizedDishList[__${itemStat.index}__].description}"
+                                      rows="4" cols="22" th:required="${itemStat.index == 0}"></textarea>
+                        </td>
+                    </tr>
+                </div>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <text th:text="'Previous photo'">Previous photo</text>
+            <img  th:src="@{'data:image/jpeg;base64,' + ${dish.image == null ?
+                 '' : encoder.getEncoder().encodeToString(dish?.image)}}"
+                 th:alt="${dish.id} + ' img'"
+                 class="dish_img">
+            <input id="file" name="file" type="file" class="file">
+        </div>
+
+        <div>
+            <div>
+                <button class="submit_button"
+                        th:with="text=${dish['new']} ?
+                         #{account.settings.redactor.dish.table.button.create} :
+                          #{account.settings.redactor.dish.table.button.update}"
+                        type="submit" th:text="${text}">Add Dish
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

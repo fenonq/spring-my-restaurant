@@ -6,8 +6,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class Constants {
-    public static final Locale[] languages = {Locale.UK,
-            Locale.forLanguageTag("uk-UA")};
+    public static final Locale[] languages = {
+            Locale.UK,
+            Locale.forLanguageTag("uk-UA"),
+//            Locale.JAPAN
+    };
 
     public static final Map<String, String> dishProperties = Stream.of(new String[][]{
             {"menu.select.orderBy.price", "price"},

@@ -45,8 +45,11 @@
                 </thead>
                 <tbody>
                 <div class="localization_input">
-                    <tr th:each="localizedDish, itemStat : ${localizedDishList}">
-                        <td th:text="${languages[__${itemStat.index}__].getDisplayLanguage()}"></td>
+                    <tr th:each="language, itemStat : ${languages}">
+                        <input type="hidden" th:field="*{localizedDishList[__${itemStat.index}__].localizedId.locale}"/>
+                        <td th:text="${localizedDishList[__${itemStat.index}__].localizedId.locale == null ?
+                        languages[__${itemStat.index}__].getDisplayLanguage() :
+                        localizedDishList[__${itemStat.index}__].localizedId.locale.getDisplayLanguage()}"></td>
                         <td><textarea th:field="*{localizedDishList[__${itemStat.index}__].name}"
                                       rows="4" cols="22" th:required="${itemStat.index == 0}"></textarea>
                         </td>
@@ -61,7 +64,7 @@
 
         <div>
             <text th:text="'Previous photo'">Previous photo</text>
-            <img  th:src="@{'data:image/jpeg;base64,' + ${dish.image == null ?
+            <img th:src="@{'data:image/jpeg;base64,' + ${dish.image == null ?
                  '' : encoder.getEncoder().encodeToString(dish?.image)}}"
                  th:alt="${dish.id} + ' img'"
                  class="dish_img">

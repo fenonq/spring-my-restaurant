@@ -74,13 +74,12 @@ public class AccountController {
         dishService.save(dish);
         List<LocalizedDish> localizedDishList = new ArrayList<>(localizedDishes.getLocalizedDishList());
 
-        for (int i = 0; i < Constants.languages.length; i++) {
-            localizedDishList.get(i).setLocalizedId(new LocalizedId(Constants.languages[i]));
+        localizedDishList.forEach(System.out::println);
+        if (localizedDishList.get(0).getLocalizedId().getLocale() == null) {
+            for (int i = 0; i < Constants.languages.length; i++) {
+                localizedDishList.get(i).setLocalizedId(new LocalizedId(Constants.languages[i]));
+            }
         }
-
-        localizedDishList
-                .removeIf(localizedDish ->
-                        localizedDish.getName().isBlank() && localizedDish.getDescription().isBlank());
 
         for (LocalizedDish localizedDish : localizedDishList) {
             dish.getLocalizations().put(localizedDish.getLocalizedId().getLocale(), localizedDish);

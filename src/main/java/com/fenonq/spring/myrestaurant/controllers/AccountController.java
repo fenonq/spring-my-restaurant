@@ -6,8 +6,10 @@ import com.fenonq.spring.myrestaurant.model.*;
 import com.fenonq.spring.myrestaurant.services.CategoryService;
 import com.fenonq.spring.myrestaurant.services.DishService;
 import com.fenonq.spring.myrestaurant.utils.Constants;
+import com.fenonq.spring.myrestaurant.utils.FileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class AccountController {
@@ -89,7 +92,9 @@ public class AccountController {
         category.getDishes().add(dish);
 
         if (!file.isEmpty()) {
-            dish.setImage(getImageBytes(file));
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+            FileUpload.saveFile(fileName, file);
+            dish.setImage(fileName);
         }
 
         categoryService.save(category);
@@ -151,7 +156,9 @@ public class AccountController {
         }
 
         if (!file.isEmpty()) {
-            category.setImage(getImageBytes(file));
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+            FileUpload.saveFile(fileName, file);
+            category.setImage(fileName);
         }
 
         categoryService.save(category);
@@ -159,12 +166,12 @@ public class AccountController {
         return "redirect:/menu";
     }
 
-    private Byte[] getImageBytes(MultipartFile file) throws IOException {
-        Byte[] byteObjects = new Byte[file.getBytes().length];
-        int i = 0;
-        for (byte b : file.getBytes()) {
-            byteObjects[i++] = b;
-        }
-        return byteObjects;
-    }
+//    private Byte[] getImageBytes(MultipartFile file) throws IOException {
+//        Byte[] byteObjects = new Byte[file.getBytes().length];
+//        int i = 0;
+//        for (byte b : file.getBytes()) {
+//            byteObjects[i++] = b;
+//        }
+//        return byteObjects;
+//    }
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 public class Dish extends BaseEntity {
 
     @Builder
-    public Dish(Long id, int price, int weight, Byte[] image, Category category) {
+    public Dish(Long id, int price, int weight, String image, Category category) {
         super(id);
         this.price = price;
         this.weight = weight;
@@ -32,9 +32,8 @@ public class Dish extends BaseEntity {
     @Column(name = "weight")
     private int weight;
 
-    @Lob
     @Column(name = "image")
-    private Byte[] image;
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

@@ -16,13 +16,13 @@ import java.util.*;
 public class Category extends BaseEntity {
 
     @Builder
-    public Category(Long id, Byte[] image) {
+    public Category(Long id, String image) {
         super(id);
         this.image = image;
     }
 
-    @Lob
-    private Byte[] image;
+    @Column(name = "image")
+    private String image;
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     private Set<Dish> dishes = new HashSet<>();

@@ -1,10 +1,8 @@
 package com.fenonq.spring.myrestaurant.controllers;
 
+import com.fenonq.spring.myrestaurant.dto.LocalizedCategoriesCreationDto;
 import com.fenonq.spring.myrestaurant.dto.LocalizedDishesCreationDto;
-import com.fenonq.spring.myrestaurant.model.Category;
-import com.fenonq.spring.myrestaurant.model.Dish;
-import com.fenonq.spring.myrestaurant.model.LocalizedDish;
-import com.fenonq.spring.myrestaurant.model.LocalizedId;
+import com.fenonq.spring.myrestaurant.model.*;
 import com.fenonq.spring.myrestaurant.services.CategoryService;
 import com.fenonq.spring.myrestaurant.services.DishService;
 import com.fenonq.spring.myrestaurant.utils.Constants;
@@ -45,11 +43,11 @@ public class AccountController {
         model.addAttribute("localizedDishList", localizedDishes.getLocalizedDishList());
         model.addAttribute("encoder", Base64.class);
 
-        return "dish/dish-form";
+        return "account/dish-form";
     }
 
     @GetMapping("/update/dish/{id}")
-    public String updateRecipe(@PathVariable Long id, Model model) {
+    public String updateDish(@PathVariable Long id, Model model) {
         Dish dish = dishService.findById(id);
 
         model.addAttribute("languages", Constants.languages);
@@ -65,7 +63,7 @@ public class AccountController {
         model.addAttribute("localizedDishList", localizedDishes.getLocalizedDishList());
         model.addAttribute("encoder", Base64.class);
 
-        return "dish/dish-form";
+        return "account/dish-form";
     }
 
     @PostMapping("/dish")
@@ -74,7 +72,6 @@ public class AccountController {
         dishService.save(dish);
         List<LocalizedDish> localizedDishList = new ArrayList<>(localizedDishes.getLocalizedDishList());
 
-        localizedDishList.forEach(System.out::println);
         if (localizedDishList.get(0).getLocalizedId().getLocale() == null) {
             for (int i = 0; i < Constants.languages.length; i++) {
                 localizedDishList.get(i).setLocalizedId(new LocalizedId(Constants.languages[i]));
@@ -97,6 +94,67 @@ public class AccountController {
 
         categoryService.save(category);
         dishService.save(dish);
+
+        return "redirect:/menu";
+    }
+
+    @GetMapping("/new/category")
+    public String newCategoryForm(Model model) {
+        model.addAttribute("languages", Constants.languages);
+        model.addAttribute("category", Category.builder().build());
+
+        LocalizedCategoriesCreationDto localizedCategories = new LocalizedCategoriesCreationDto();
+        for (int i = 0; i < Constants.languages.length; i++) {
+            localizedCategories.addLocalizedCategory(new LocalizedCategory());
+        }
+        model.addAttribute("form", localizedCategories);
+        model.addAttribute("localizedCategoryList", localizedCategories.getLocalizedCategoryList());
+        model.addAttribute("encoder", Base64.class);
+
+        return "account/category-form";
+    }
+
+    @GetMapping("/update/category/{id}")
+    public String updateCategory(@PathVariable Long id, Model model) {
+        Category category = categoryService.findById(id);
+
+        model.addAttribute("languages", Constants.languages);
+        model.addAttribute("category", category);
+
+        LocalizedCategoriesCreationDto localizedCategories = new LocalizedCategoriesCreationDto();
+        for (LocalizedCategory localizedCategory : category.getLocalizations().values()) {
+            localizedCategories.addLocalizedCategory(localizedCategory);
+        }
+
+        model.addAttribute("form", localizedCategories);
+        model.addAttribute("localizedCategoryList", localizedCategories.getLocalizedCategoryList());
+        model.addAttribute("encoder", Base64.class);
+
+        return "account/category-form";
+    }
+
+    @PostMapping("/category")
+    public String createOrUpdateCategory(Category category, LocalizedCategoriesCreationDto localizedCategories,
+                                         MultipartFile file) throws IOException {
+        categoryService.save(category);
+        List<LocalizedCategory> localizedCategoryList = new ArrayList<>(localizedCategories.getLocalizedCategoryList());
+
+        if (localizedCategoryList.get(0).getLocalizedId().getLocale() == null) {
+            for (int i = 0; i < Constants.languages.length; i++) {
+                localizedCategoryList.get(i).setLocalizedId(new LocalizedId(Constants.languages[i]));
+            }
+        }
+
+        for (LocalizedCategory localizedCategory : localizedCategoryList) {
+            category.getLocalizations().put(localizedCategory.getLocalizedId().getLocale(), localizedCategory);
+            localizedCategory.setCategory(category);
+        }
+
+        if (!file.isEmpty()) {
+            category.setImage(getImageBytes(file));
+        }
+
+        categoryService.save(category);
 
         return "redirect:/menu";
     }

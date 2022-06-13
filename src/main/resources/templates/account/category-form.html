@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head-links :: head-links}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div class="create_category_wrapper">
+
+    <form method="post" enctype="multipart/form-data" th:action="@{/category}">
+        <div th:object="${category}">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{image}"/>
+        </div>
+
+        <div>
+            <text th:text="'Previous photo'">Previous photo</text>
+            <img th:src="@{'data:image/jpeg;base64,' + ${category.image == null ?
+                 '' : encoder.getEncoder().encodeToString(category?.image)}}"
+                 th:alt="${category.id} + ' img'"
+                 class="category_img">
+            <input id="file" name="file" type="file" class="file">
+        </div>
+
+        <div th:object="${form}">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th th:text="#{account.settings.redactor.dish.table.name}">Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div class="localization_input">
+                    <tr th:each="language, itemStat : ${languages}">
+                        <input type="hidden"
+                               th:field="*{localizedCategoryList[__${itemStat.index}__].localizedId.locale}"/>
+                        <td th:text="${localizedCategoryList[__${itemStat.index}__].localizedId.locale == null ?
+                        languages[__${itemStat.index}__].getDisplayLanguage() :
+                        localizedCategoryList[__${itemStat.index}__].localizedId.locale.getDisplayLanguage()}"></td>
+                        <td><textarea th:field="*{localizedCategoryList[__${itemStat.index}__].name}"
+                                      rows="4" cols="22" th:required="${itemStat.index == 0}"></textarea>
+                        </td>
+                    </tr>
+                </div>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <div>
+                <button class="submit_button"
+                        th:with="text=${category['new']} ?
+                         #{account.settings.redactor.dish.table.button.create} :
+                          #{account.settings.redactor.dish.table.button.update}"
+                        type="submit" th:text="${text}">Add category
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

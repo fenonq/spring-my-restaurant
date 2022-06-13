@@ -26,7 +26,7 @@ public class MenuController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping({"", "/", "/menu"})
+    @GetMapping({"/menu"})
     public String menu(Model model,
                        @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, value = 8) Pageable pageable,
                        @RequestParam(required = false) Long categoryId) {

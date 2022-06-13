@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head-links :: head-links}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<main class="main">
+    <h1 class="menu" th:text="#{index.welcome}">Welcome</h1>
+
+    <div class="dishes_wrapper category_wrapper">
+        <div class="dishes">
+            <div th:each="category : ${categories}"  class="dish category">
+                <a th:href="@{/menu(categoryId=${category.id})}">
+                    <img th:src="@{'img/' + ${category.image}}"
+                         class="dish_img">
+                </a>
+                <p class="dish_text dish_name"
+                   th:text="${category.localizations.get(#locale)} ?
+                   ${category.localizations.get(#locale).name} :
+                   ${category.localizations.get(languages[0]).name}"></p>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

@@ -20,7 +20,7 @@ a {
     padding: 2rem 0;
     font-size: 1.5rem;
 
-    background-color: #31354F;
+    background: url("../img/background.png");
     background-size: cover;
     object-fit: cover;
 }

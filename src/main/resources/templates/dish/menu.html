@@ -9,42 +9,104 @@
 <div th:insert="~{fragments/header :: header}"></div>
 <!--/*@thymesVar id="dish" type="com.fenonq.spring.myrestaurant.model.Dish"*/-->
 <!--/*@thymesVar id="localizedDish" type="com.fenonq.spring.myrestaurant.model.LocalizedDish"*/-->
-<h1 class="menu" th:text="#{menu.menu}">Menu</h1>
+<!--/*@thymesVar id="dishes" type="org.springframework.data.domain.PageImpl"*/-->
+<!--/*@thymesVar id="dishProperties" type="java.util.Map"*/-->
+<!--/*@thymesVar id="categories" type="java.util.Set"*/-->
+<!--/*@thymesVar id="category" type="com.fenonq.spring.myrestaurant.model.Category"*/-->
+<!--/*@thymesVar id="localizedCategory" type="com.fenonq.spring.myrestaurant.model.LocalizedCategory"*/-->
+<!--/*@thymesVar id="encoder" type="java.util.Base64"*/-->
+<main class="main">
+    <h1 class="menu" th:text="#{menu.menu}">Menu</h1>
 
-<div class="dishes_wrapper">
-    <div class="dishes">
-        <!--            <c:if test="${dish.isVisible == 1}">-->
-        <div th:each="dish : ${dishes}" class="dish">
-            <img src="${pageContext.request.contextPath}/static/img/dish-${dish.id}.png"
-                 th:alt="${dish.localizations.get(languages[0]).name} + ' img'"
-                 class="dish_img">
-            <p class="dish_text dish_name"
-               th:text="${dish.localizations.get(#locale)} ?
-                ${dish.localizations.get(#locale).name} :
-                 ${dish.localizations.get(languages[0]).name}"></p>
+    <div class="filter_wrapper">
+        <form class="filter_form">
+            <div>
+                <text th:text="#{menu.info.select.dishesOnPage} + ': '"></text>
+                <select name="size" class="filter-select">
+                    <option th:each="i : ${#numbers.sequence(4, 12, 4)}" th:text="${i}"
+                            th:selected="${i==dishes.getSize()}"></option>
+                </select>
+            </div>
 
-            <!--            <td th:text="${dish.localizations.get(#locale)} ?-->
-            <!--                                 ${dish.localizations.get(#locale).name} :-->
-            <!--                                 ${dish.localizations.get(languages[0]).name}">-->
-            <!--                                                    test-->
-            <!--                                                </td>-->
-            <p class="dish_text dish_description"
-               th:text="${dish.category.localizations.get(#locale)} ?
-               ${dish.category.localizations.get(#locale).name} :
-                ${dish.category.localizations.get(languages[0]).name}"></p>
-            <p class="dish_text dish_weight" th:text="${dish.weight} + 'g'"></p>
-            <p class="dish_text dish_price" th:text="${dish.price} + '$'"></p>
-            <form action="${pageContext.request.contextPath}/cart" method="post">
-                <input name="id" style="display: none" value="${dish.id}">
-                <input value="1" name="count" style="display: none">
-                <button type="submit"
-                        class="dish_button"
-                        th:text="#{menu.button.add}">
-                </button>
-            </form>
-        </div>
-        <!--            </c:if>-->
+            <div>
+                <text th:text="#{menu.info.select.sortBy} + ': '"></text>
+                <select name="sort" class="filter-select">
+                    <option th:each="orderBy : ${dishProperties}"
+                            th:text="#{${orderBy.key}}"
+                            th:value="${orderBy.value}"
+                            th:selected="${orderBy.value==dishes.sort.iterator().next().getProperty()}"></option>
+                </select>
+            </div>
+
+            <div>
+                <text th:text="#{menu.info.select.category} + ': '"></text>
+                <select name="categoryId" class="filter-select">
+                    <option th:value="0" th:text="#{menu.select.filter.all}"></option>
+                    <option th:each="category : ${categories}"
+                            th:text="${category.localizations.get(#locale)} ?
+                            ${category.localizations.get(#locale).name} :
+                            ${category.localizations.get(languages[0]).name}"
+                            th:value="${category.id}"
+                            th:selected="${param.get('categoryId')==null ?
+                            category.id==0 :
+                            category.id.toString()==param.get('categoryId').toString()}">
+                    </option>
+                </select>
+            </div>
+            <button type="submit" th:text="#{menu.select.filter.button}"></button>
+        </form>
     </div>
-</div>
+
+
+    <div class="dishes_wrapper">
+        <div class="dishes">
+            <!--            <c:if test="${dish.isVisible == 1}">-->
+            <div th:each="dish : ${dishes}" class="dish">
+                <!--                <img th:src="@{'data:image/jpeg;base64,' + ${dish.image == null ?-->
+                <!--                 '' : encoder.getEncoder().encodeToString(dish?.image)}}"-->
+                <!--                     th:alt="${dish.id} + ' img'"-->
+                <!--                     class="dish_img">-->
+
+                <img th:src="@{'img/' + ${dish.image}}"
+                     class="dish_img">
+
+                <p class="dish_text dish_name"
+                   th:text="${dish.localizations.get(#locale)} ?
+                   ${dish.localizations.get(#locale).name} :
+                   ${dish.localizations.get(languages[0]).name}"></p>
+
+                <p class="dish_text dish_description"
+                   th:text="${dish.localizations.get(#locale)} ?
+                   ${dish.localizations.get(#locale).description} :
+                   ${dish.localizations.get(languages[0]).description}"></p>
+
+                <p class="dish_text dish_weight" th:text="${dish.weight} + 'g'"></p>
+                <p class="dish_text dish_price" th:text="${dish.price} + '$'"></p>
+                <form action="${pageContext.request.contextPath}/cart" method="post">
+                    <input name="id" style="display: none" value="${dish.id}">
+                    <input value="1" name="count" style="display: none">
+                    <button type="submit"
+                            class="dish_button"
+                            th:text="#{menu.button.add}">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="..." class="bottom_nav">
+        <ul class="nav_list">
+            <li th:each="i : ${#numbers.sequence(0, dishes.getTotalPages() - 1)}" class="nav_list__item">
+                <a th:href="@{/menu(page=${i}, size=${dishes.getSize()},
+                 sort=${dishes.sort.iterator().next().getProperty()},
+                 categoryId=${param.get('categoryId')})}"
+                   th:text="${i + 1}"
+                   th:class="${i==dishes.number ? 'disabled selected' : ''}"
+                   th:classappend="'page-link'"
+                   th:style="${dishes.getTotalPages() == 0} ? 'display: none'"></a>
+            </li>
+        </ul>
+    </nav>
+</main>
 </body>
 </html>

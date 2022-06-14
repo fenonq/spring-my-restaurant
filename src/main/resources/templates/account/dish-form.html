@@ -6,19 +6,30 @@
 
 </head>
 <body>
-<!--/*@thymesVar id="encoder" type="java.util.Base64"*/-->
 
 <div th:insert="~{fragments/header :: header}"></div>
 <div class="create_category_wrapper">
 
     <form method="post" enctype="multipart/form-data" th:action="@{/dish}">
+
         <div th:object="${dish}">
             <input type="hidden" th:field="*{id}"/>
             <input type="hidden" th:field="*{image}"/>
-            <input type="number" min="1" th:placeholder="#{account.settings.redactor.dish.table.price}"
+            <input type="number" th:placeholder="#{account.settings.redactor.table.price}"
                    th:field="*{price}"/>
-            <input type="number" min="1" th:placeholder="#{account.settings.redactor.dish.table.weight}"
+            <span class="help-block" th:if="${#fields.hasErrors('price')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('price')}" th:text="${err}"></li>
+                </ul>
+            </span>
+
+            <input type="number" th:placeholder="#{account.settings.redactor.table.weight}"
                    th:field="*{weight}"/>
+            <span class="help-block" th:if="${#fields.hasErrors('weight')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('weight')}" th:text="${err}"></li>
+                </ul>
+            </span>
 
             <select name="categoryId" class="filter-select">
                 <option th:each="category : ${categories}"
@@ -26,21 +37,22 @@
                             ${category.localizations.get(#locale).name} :
                             ${category.localizations.get(languages[0]).name}"
                         th:value="${category.id}"
-                        th:selected="${dish.category==null ?
+                        th:selected="${categoryId==null ?
+                            (dish.category==null ?
                             category.id==1 :
-                            category.id.toString()==dish.category.id.toString()}">
+                            category.id.toString()==dish.category.id.toString()) :
+                            category.id.toString() == categoryId.toString()}">
                 </option>
             </select>
         </div>
-
 
         <div th:object="${form}">
             <table>
                 <thead>
                 <tr>
                     <th></th>
-                    <th th:text="#{account.settings.redactor.dish.table.name}">Name</th>
-                    <th th:text="#{account.settings.redactor.dish.table.description}">Description</th>
+                    <th th:text="#{account.settings.redactor.table.name}">Name</th>
+                    <th th:text="#{account.settings.redactor.table.description}">Description</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,11 +75,6 @@
         </div>
 
         <div>
-            <text th:text="'Previous photo'">Previous photo</text>
-            <img th:src="@{'data:image/jpeg;base64,' + ${dish.image == null ?
-                 '' : encoder.getEncoder().encodeToString(dish?.image)}}"
-                 th:alt="${dish.id} + ' img'"
-                 class="dish_img">
             <input id="file" name="file" type="file" class="file">
         </div>
 
@@ -75,8 +82,8 @@
             <div>
                 <button class="submit_button"
                         th:with="text=${dish['new']} ?
-                         #{account.settings.redactor.dish.table.button.create} :
-                          #{account.settings.redactor.dish.table.button.update}"
+                         #{account.settings.redactor.table.button.create} :
+                          #{account.settings.redactor.table.button.update}"
                         type="submit" th:text="${text}">Add Dish
                 </button>
             </div>

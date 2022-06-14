@@ -5,6 +5,10 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -26,9 +30,13 @@ public class Dish extends BaseEntity {
         this.category = category;
     }
 
+    @Min(1)
+    @Max(999)
     @Column(name = "price")
     private int price;
 
+    @Min(1)
+    @Max(9999)
     @Column(name = "weight")
     private int weight;
 

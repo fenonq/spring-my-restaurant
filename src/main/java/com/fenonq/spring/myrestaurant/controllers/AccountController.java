@@ -7,20 +7,24 @@ import com.fenonq.spring.myrestaurant.services.CategoryService;
 import com.fenonq.spring.myrestaurant.services.DishService;
 import com.fenonq.spring.myrestaurant.utils.Constants;
 import com.fenonq.spring.myrestaurant.utils.FileUpload;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @Controller
 public class AccountController {
 
@@ -44,7 +48,6 @@ public class AccountController {
         }
         model.addAttribute("form", localizedDishes);
         model.addAttribute("localizedDishList", localizedDishes.getLocalizedDishList());
-        model.addAttribute("encoder", Base64.class);
 
         return "account/dish-form";
     }
@@ -64,14 +67,25 @@ public class AccountController {
 
         model.addAttribute("form", localizedDishes);
         model.addAttribute("localizedDishList", localizedDishes.getLocalizedDishList());
-        model.addAttribute("encoder", Base64.class);
 
         return "account/dish-form";
     }
 
     @PostMapping("/dish")
-    public String createOrUpdateDish(Dish dish, LocalizedDishesCreationDto localizedDishes, Long categoryId,
-                                     MultipartFile file) throws IOException {
+    public String createOrUpdateDish(@Valid Dish dish, BindingResult result, LocalizedDishesCreationDto localizedDishes,
+                                     Long categoryId, MultipartFile file, Model model) throws IOException {
+
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(objectError -> log.error(objectError.toString()));
+            model.addAttribute("languages", Constants.languages);
+            model.addAttribute("dish", dish);
+            model.addAttribute("form", localizedDishes);
+            model.addAttribute("categoryId", categoryId);
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("localizedDishList", localizedDishes.getLocalizedDishList());
+            return "account/dish-form";
+        }
+
         dishService.save(dish);
         List<LocalizedDish> localizedDishList = new ArrayList<>(localizedDishes.getLocalizedDishList());
 

@@ -2,6 +2,7 @@ package com.fenonq.spring.myrestaurant.utils;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -15,15 +16,17 @@ public abstract class FileUpload {
                                 MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get("src/main/resources/static/img");
 
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
+         if (!(new File("src/main/resources/static/img", fileName).exists())) {
+             if (!Files.exists(uploadPath)) {
+                 Files.createDirectories(uploadPath);
+             }
 
-        try (InputStream inputStream = multipartFile.getInputStream()) {
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException ioe) {
-            throw new IOException("Could not save image file: " + fileName, ioe);
-        }
+             try (InputStream inputStream = multipartFile.getInputStream()) {
+                 Path filePath = uploadPath.resolve(fileName);
+                 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+             } catch (IOException ioe) {
+                 throw new IOException("Could not save image file: " + fileName, ioe);
+             }
+         }
     }
 }

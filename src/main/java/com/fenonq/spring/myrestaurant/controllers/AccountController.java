@@ -38,7 +38,6 @@ public class AccountController {
 
     @GetMapping("/new/dish")
     public String newDishForm(Model model) {
-        model.addAttribute("languages", Constants.languages);
         model.addAttribute("dish", Dish.builder().build());
         model.addAttribute("categories", categoryService.findAll());
 
@@ -56,7 +55,6 @@ public class AccountController {
     public String updateDish(@PathVariable Long id, Model model) {
         Dish dish = dishService.findById(id);
 
-        model.addAttribute("languages", Constants.languages);
         model.addAttribute("dish", dish);
         model.addAttribute("categories", categoryService.findAll());
 
@@ -77,7 +75,6 @@ public class AccountController {
 
         if (result.hasErrors()) {
             result.getAllErrors().forEach(objectError -> log.error(objectError.toString()));
-            model.addAttribute("languages", Constants.languages);
             model.addAttribute("dish", dish);
             model.addAttribute("form", localizedDishes);
             model.addAttribute("categoryId", categoryId);
@@ -119,7 +116,6 @@ public class AccountController {
 
     @GetMapping("/new/category")
     public String newCategoryForm(Model model) {
-        model.addAttribute("languages", Constants.languages);
         model.addAttribute("category", Category.builder().build());
 
         LocalizedCategoriesCreationDto localizedCategories = new LocalizedCategoriesCreationDto();
@@ -137,7 +133,6 @@ public class AccountController {
     public String updateCategory(@PathVariable Long id, Model model) {
         Category category = categoryService.findById(id);
 
-        model.addAttribute("languages", Constants.languages);
         model.addAttribute("category", category);
 
         LocalizedCategoriesCreationDto localizedCategories = new LocalizedCategoriesCreationDto();

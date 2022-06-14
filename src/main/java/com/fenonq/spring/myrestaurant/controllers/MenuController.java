@@ -30,8 +30,6 @@ public class MenuController {
     public String menu(Model model,
                        @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, value = 8) Pageable pageable,
                        @RequestParam(required = false) Long categoryId) {
-        model.addAttribute("encoder", Base64.class);
-        model.addAttribute("languages", Constants.languages);
         model.addAttribute("dishProperties", Constants.dishProperties);
         model.addAttribute("categories", categoryService.findAll());
 

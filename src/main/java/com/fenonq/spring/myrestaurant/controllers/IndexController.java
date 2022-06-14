@@ -17,7 +17,6 @@ public class IndexController {
 
     @GetMapping({"", "/"})
     public String welcome(Model model) {
-        model.addAttribute("languages", Constants.languages);
         model.addAttribute("categories", categoryService.findAll());
         return "index";
     }

@@ -1,12 +1,10 @@
 package com.fenonq.spring.myrestaurant.bootstrap;
 
 import com.fenonq.spring.myrestaurant.model.*;
-import com.fenonq.spring.myrestaurant.model.enums.Roles;
 import com.fenonq.spring.myrestaurant.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 
@@ -15,12 +13,12 @@ public class DataLoader implements CommandLineRunner {
 
     private final DishService dishService;
     private final CategoryService categoryService;
-    private final AccountService accountService;
+    private final UserService accountService;
     private final ReceiptService receiptService;
     private final StatusService statusService;
 
     public DataLoader(DishService dishService, CategoryService categoryService,
-                      AccountService accountService, ReceiptService receiptService,
+                      UserService accountService, ReceiptService receiptService,
                       StatusService statusService) {
         this.dishService = dishService;
         this.categoryService = categoryService;
@@ -34,27 +32,27 @@ public class DataLoader implements CommandLineRunner {
         Locale ua = Locale.forLanguageTag("uk-UA");
         Locale en = Locale.UK;
 
-        Account customer =
-                Account
-                        .builder()
-                        .name("Name")
-                        .surname("Surname")
-                        .login("customer")
-                        .password("1234")
-                        .role(Roles.CUSTOMER)
-                        .build();
-
-        Account manager =
-                Account
-                        .builder()
-                        .name("Name")
-                        .surname("Surname")
-                        .login("manager")
-                        .password("1234")
-                        .role(Roles.MANAGER)
-                        .build();
-
-        accountService.save(manager);
+//        Account customer =
+//                Account
+//                        .builder()
+//                        .name("Name")
+//                        .surname("Surname")
+//                        .login("customer")
+//                        .password("1234")
+//                        .role(Roles.CUSTOMER)
+//                        .build();
+//
+//        Account manager =
+//                Account
+//                        .builder()
+//                        .name("Name")
+//                        .surname("Surname")
+//                        .login("manager")
+//                        .password("1234")
+//                        .role(Roles.MANAGER)
+//                        .build();
+//
+//        accountService.save(manager);
 
         Status status =
                 Status
@@ -371,20 +369,20 @@ public class DataLoader implements CommandLineRunner {
         categoryService.save(category2);
         categoryService.save(category3);
 
-        customer.getCart().add(bograch);
-        accountService.save(customer);
-
-        Receipt receipt =
-                Receipt
-                        .builder()
-                        .customer(customer)
-                        .manager(manager)
-                        .totalPrice(123)
-                        .createDate(LocalDateTime.now())
-                        .status(status)
-                        .build();
-        receipt.getDishes().add(bograch);
-        receipt.getDishes().add(bograch);
-        receiptService.save(receipt);
+//        customer.getCart().add(bograch);
+//        accountService.save(customer);
+//
+//        Receipt receipt =
+//                Receipt
+//                        .builder()
+//                        .customer(customer)
+//                        .manager(manager)
+//                        .totalPrice(123)
+//                        .createDate(LocalDateTime.now())
+//                        .status(status)
+//                        .build();
+//        receipt.getDishes().add(bograch);
+//        receipt.getDishes().add(bograch);
+//        receiptService.save(receipt);
     }
 }

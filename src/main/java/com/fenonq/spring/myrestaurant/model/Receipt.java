@@ -5,9 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
@@ -18,7 +16,7 @@ import java.util.Map;
 public class Receipt extends BaseEntity {
 
     @Builder
-    public Receipt(Long id, Account customer, Account manager, Status status,
+    public Receipt(Long id, User customer, User manager, Status status,
                    int totalPrice, LocalDateTime createDate) {
         super(id);
         this.customer = customer;
@@ -29,10 +27,10 @@ public class Receipt extends BaseEntity {
     }
 
     @ManyToOne
-    private Account customer;
+    private User customer;
 
     @ManyToOne
-    private Account manager;
+    private User manager;
 
     @ManyToOne
     private Status status;

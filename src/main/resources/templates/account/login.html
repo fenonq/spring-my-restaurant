@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head-links :: head-links}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="wrapper">
+    <form th:action="@{/login}" method="post" class="ls-form">
+        <h1 class="ls-form__header" th:text="#{login}"></h1>
+        <div class="mandatory_field">
+            <input name="username" class="ls-form__input" id="username" type="text"
+                   th:placeholder="#{placeholder.login}">
+        </div>
+        <div class="mandatory_field">
+            <input name="password" class="ls-form__input" id="password" type="password"
+                   th:placeholder="#{placeholder.password}">
+        </div>
+
+        <button class="ls-form__button" type="button" th:text="#{login.button.submit}">Submit</button>
+        <p class="under_text">
+            <a
+                    class="click-reference"
+                    th:text="#{login.message.ask}"
+                    th:href="@{/registration}">Reg
+            </a>
+        </p>
+
+        <p th:if="${param.error ne null}" style="font-size: .8rem; color: red; font-style: italic; margin: 0"
+           th:text="#{login.message.error}">Error</p>
+
+    </form>
+</div>
+
+<script th:src="@{js/login.js}"></script>
+</body>
+</html>

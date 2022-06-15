@@ -19,10 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -174,13 +171,4 @@ public class AccountController {
 
         return "redirect:/menu";
     }
-
-//    private Byte[] getImageBytes(MultipartFile file) throws IOException {
-//        Byte[] byteObjects = new Byte[file.getBytes().length];
-//        int i = 0;
-//        for (byte b : file.getBytes()) {
-//            byteObjects[i++] = b;
-//        }
-//        return byteObjects;
-//    }
 }

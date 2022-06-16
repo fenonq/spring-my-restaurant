@@ -6,4 +6,8 @@ public interface UserService extends CrudService<User, Long> {
 //    void clearUserCart(Long userId);
 
     User findUserByUsername(String username);
+
+    User changeRole(User user);
+
+    User banUser(User user);
 }

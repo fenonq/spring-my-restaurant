@@ -1,6 +1,7 @@
 package com.fenonq.spring.myrestaurant.services.impl;
 
 import com.fenonq.spring.myrestaurant.model.User;
+import com.fenonq.spring.myrestaurant.model.enums.Roles;
 import com.fenonq.spring.myrestaurant.repositories.UserRepository;
 import com.fenonq.spring.myrestaurant.services.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,7 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User object) {
-        object.setPassword(passwordEncoder.encode(object.getPassword()));
+        if (object.getId() == null) {
+            object.setPassword(passwordEncoder.encode(object.getPassword()));
+        }
         return accountRepository.save(object);
     }
 
@@ -57,5 +60,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUsername(String username) {
         return accountRepository.findUserByUsername(username);
+    }
+
+    @Override
+    public User changeRole(User user) {
+        Roles previousRole = user.getRoles().iterator().next();
+        user.getRoles().clear();
+        user.getRoles().add(Roles.changeRole(previousRole));
+        return user;
+    }
+
+    @Override
+    public User banUser(User user) {
+        user.setActive(!user.isActive());
+        return user;
     }
 }

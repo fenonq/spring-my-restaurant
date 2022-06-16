@@ -1,7 +1,11 @@
 package com.fenonq.spring.myrestaurant.model.enums;
 
 public enum Roles {
-    ADMIN,
+    CUSTOMER,
     MANAGER,
-    CUSTOMER
+    ADMIN;
+
+    public static Roles changeRole(Roles role) {
+        return role == CUSTOMER ? MANAGER : CUSTOMER;
+    }
 }

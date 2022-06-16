@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head-links :: head-links}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="table_wrapper">
+    <p class="table_title" th:text="#{admin.users.allUsers}">All users</p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>№</th>
+            <th th:text="#{admin.users.name}">Name</th>
+            <th th:text="#{admin.users.surname}">Surname</th>
+            <th th:text="#{admin.users.login}">Login</th>
+            <th th:text="#{admin.users.role }">Role</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.surname}"></td>
+            <td th:text="${user.username}"></td>
+            <td>
+                <form method="post" th:action="@{/admin/user/changeRole}">
+                    <input name="userId" th:value="${user.id}" style="display: none">
+                    <button type="submit" th:text="${user.roles.iterator().next()}">
+                        Submit
+                    </button>
+                </form>
+            </td>
+            <td>
+                <form method="post" th:action="@{/admin/user/ban}" class="form_button">
+                    <input name="userId" th:value="${user.id}" style="display: none">
+                    <button type="submit" th:text="${user.active == true ? #{admin.users.ban} : #{admin.users.unban}}">
+                        Submit
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

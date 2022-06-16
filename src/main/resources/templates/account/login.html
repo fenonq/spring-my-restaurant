@@ -31,6 +31,9 @@
         <p th:if="${param.error ne null}" style="font-size: .8rem; color: red; font-style: italic; margin: 0"
            th:text="#{login.message.error}">Error</p>
 
+        <p th:if="${param.logout ne null}" style="font-size: .8rem; color: green; font-style: italic; margin: 0"
+           th:text="#{login.message.logout}">Logout</p>
+
     </form>
 </div>
 

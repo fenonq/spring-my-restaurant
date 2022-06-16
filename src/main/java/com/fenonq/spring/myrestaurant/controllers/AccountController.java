@@ -121,7 +121,6 @@ public class AccountController {
         }
         model.addAttribute("form", localizedCategories);
         model.addAttribute("localizedCategoryList", localizedCategories.getLocalizedCategoryList());
-        model.addAttribute("encoder", Base64.class);
 
         return "account/category-form";
     }

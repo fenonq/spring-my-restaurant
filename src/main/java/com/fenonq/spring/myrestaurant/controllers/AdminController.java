@@ -24,7 +24,6 @@ public class AdminController {
         Set<User> users = userService.findAll();
         users.removeIf(user -> user.getRoles().iterator().next() == Roles.ADMIN);
         model.addAttribute("users", users);
-        users.forEach(System.out::println);
         return "account/users";
     }
 

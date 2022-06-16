@@ -37,7 +37,7 @@
             <td>
                 <form method="post" th:action="@{/admin/user/ban}" class="form_button">
                     <input name="userId" th:value="${user.id}" style="display: none">
-                    <button type="submit" th:text="${user.active == true ? #{admin.users.ban} : #{admin.users.unban}}">
+                    <button type="submit" th:text="${user.active == true} ? #{admin.users.ban} : #{admin.users.unban}">
                         Submit
                     </button>
                 </form>

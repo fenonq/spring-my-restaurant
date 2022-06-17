@@ -18,18 +18,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Controller
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final DishService dishService;
 
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, DishService dishService) {
         this.categoryService = categoryService;
+        this.dishService = dishService;
     }
 
     @GetMapping("/categories")
@@ -42,6 +41,8 @@ public class CategoryController {
     public String changeVisibility(@PathVariable Long categoryId) {
         Category category = categoryService.findById(categoryId);
         categoryService.changeVisibility(category);
+        Set<Dish> categoryDishes = category.getDishes();
+        categoryDishes.forEach(dishService::changeVisibility);
         categoryService.save(category);
         return "redirect:/categories";
     }

@@ -43,6 +43,7 @@
                 <select name="categoryId" class="filter-select">
                     <option th:value="0" th:text="#{menu.select.filter.all}"></option>
                     <option th:each="category : ${categories}"
+                            th:style="${!category.visible} ? 'display: none'"
                             th:text="${category.localizations.get(#locale)} ?
                             ${category.localizations.get(#locale).name} :
                             ${category.localizations.get(languages[0]).name}"

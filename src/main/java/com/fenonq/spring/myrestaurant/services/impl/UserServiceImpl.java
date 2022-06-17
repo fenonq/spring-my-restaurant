@@ -8,8 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Set<User> findAll() {
-        Set<User> accounts = new HashSet<>();
+        Set<User> accounts = new TreeSet<>(Comparator.comparing(User::getId));
         accountRepository.findAll().forEach(accounts::add);
         return accounts;
     }

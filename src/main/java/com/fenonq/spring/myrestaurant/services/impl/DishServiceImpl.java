@@ -9,8 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class DishServiceImpl implements DishService {
@@ -25,7 +27,7 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Set<Dish> findAll() {
-        Set<Dish> dishes = new HashSet<>();
+        Set<Dish> dishes = new TreeSet<>(Comparator.comparing(Dish::getId));
         dishRepository.findAll().forEach(dishes::add);
         return dishes;
     }
@@ -37,6 +39,9 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Dish save(Dish object) {
+        if (object.getId() == null) {
+            object.setVisible(true);
+        }
         return dishRepository.save(object);
     }
 
@@ -59,5 +64,11 @@ public class DishServiceImpl implements DishService {
     public Page<Dish> findAllByCategory(Long id, Pageable pageable) {
         Category category = categoryRepository.findById(id).orElse(null);
         return dishRepository.findAllByCategory(category, pageable);
+    }
+
+    @Override
+    public Dish changeVisibility(Dish dish) {
+        dish.setVisible(!dish.isVisible());
+        return dish;
     }
 }

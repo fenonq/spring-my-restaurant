@@ -14,21 +14,12 @@
             <input type="hidden" th:field="*{image}"/>
         </div>
 
-        <div>
-            <text th:text="'Previous photo'">Previous photo</text>
-            <img th:src="@{'data:image/jpeg;base64,' + ${category.image == null ?
-                 '' : encoder.getEncoder().encodeToString(category?.image)}}"
-                 th:alt="${category.id} + ' img'"
-                 class="category_img">
-            <input id="file" name="file" type="file" class="file">
-        </div>
-
         <div th:object="${form}">
             <table>
                 <thead>
                 <tr>
                     <th></th>
-                    <th th:text="#{account.settings.redactor.dish.table.name}">Name</th>
+                    <th th:text="#{account.settings.redactor.table.name}">Name</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,12 +39,24 @@
             </table>
         </div>
 
+        <div class="img_container">
+            <div th:text="#{account.settings.redactor.table.button.previous}"></div>
+            <div>
+                <img th:src="@{'/img/' + ${category.image}}"
+                     class="cart_dish_img">
+            </div>
+        </div>
+
+        <div>
+            <input id="file" name="file" type="file" class="file">
+        </div>
+
         <div>
             <div>
                 <button class="submit_button"
                         th:with="text=${category['new']} ?
-                         #{account.settings.redactor.dish.table.button.create} :
-                          #{account.settings.redactor.dish.table.button.update}"
+                         #{account.settings.redactor.table.button.create} :
+                          #{account.settings.redactor.table.button.update}"
                         type="submit" th:text="${text}">Add category
                 </button>
             </div>

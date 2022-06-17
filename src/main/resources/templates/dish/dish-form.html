@@ -74,6 +74,14 @@
             </table>
         </div>
 
+        <div class="img_container">
+            <div th:text="#{account.settings.redactor.table.button.previous}"></div>
+            <div>
+                <img th:src="@{'/img/' + ${dish.image}}"
+                     class="cart_dish_img">
+            </div>
+        </div>
+
         <div>
             <input id="file" name="file" type="file" class="file">
         </div>

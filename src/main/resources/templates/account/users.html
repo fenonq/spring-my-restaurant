@@ -27,17 +27,15 @@
             <td th:text="${user.surname}"></td>
             <td th:text="${user.username}"></td>
             <td>
-                <form method="post" th:action="@{/admin/user/changeRole}">
-                    <input name="userId" th:value="${user.id}" style="display: none">
+                <form method="post" th:action="@{'/admin/user/changeRole/' + ${user.id}}">
                     <button type="submit" th:text="${user.roles.iterator().next()}">
                         Submit
                     </button>
                 </form>
             </td>
             <td>
-                <form method="post" th:action="@{/admin/user/ban}" class="form_button">
-                    <input name="userId" th:value="${user.id}" style="display: none">
-                    <button type="submit" th:text="${user.active == true} ? #{admin.users.ban} : #{admin.users.unban}">
+                <form method="post" th:action="@{'/admin/user/ban/' + ${user.id}}" class="form_button">
+                    <button type="submit" th:text="${user.active} ? #{admin.users.ban} : #{admin.users.unban}">
                         Submit
                     </button>
                 </form>

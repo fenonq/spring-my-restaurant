@@ -61,7 +61,7 @@
     <div class="dishes_wrapper">
         <div class="dishes">
             <!--            <c:if test="${dish.isVisible == 1}">-->
-            <div th:each="dish : ${dishes}" class="dish">
+            <div th:each="dish : ${dishes}" class="dish" th:style="${!dish.visible} ? 'display: none'">
                 <!--                <img th:src="@{'data:image/jpeg;base64,' + ${dish.image == null ?-->
                 <!--                 '' : encoder.getEncoder().encodeToString(dish?.image)}}"-->
                 <!--                     th:alt="${dish.id} + ' img'"-->

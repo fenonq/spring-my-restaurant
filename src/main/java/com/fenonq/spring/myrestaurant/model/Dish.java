@@ -47,6 +47,9 @@ public class Dish extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "visible")
+    private boolean visible = true;
+
     @OneToMany(mappedBy = "dish", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     @MapKey(name = "localizedId.locale")
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)

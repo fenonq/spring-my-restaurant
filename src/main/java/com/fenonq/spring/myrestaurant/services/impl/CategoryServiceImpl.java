@@ -5,8 +5,9 @@ import com.fenonq.spring.myrestaurant.repositories.CategoryRepository;
 import com.fenonq.spring.myrestaurant.services.CategoryService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -19,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Set<Category> findAll() {
-        Set<Category> categories = new HashSet<>();
+        Set<Category> categories = new TreeSet<>(Comparator.comparing(Category::getId));
         categoryRepository.findAll().forEach(categories::add);
         return categories;
     }
@@ -31,6 +32,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category save(Category object) {
+        if (object.getId() == null) {
+            object.setVisible(true);
+        }
         return categoryRepository.save(object);
     }
 
@@ -42,5 +46,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteById(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Category changeVisibility(Category category) {
+        category.setVisible(!category.isVisible());
+        return category;
     }
 }

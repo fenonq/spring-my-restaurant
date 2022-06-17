@@ -6,6 +6,7 @@ import com.fenonq.spring.myrestaurant.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Set;
@@ -27,8 +28,8 @@ public class AdminController {
         return "account/users";
     }
 
-    @PostMapping("/admin/user/changeRole")
-    public String changeRole(Long userId) {
+    @PostMapping("/admin/user/changeRole/{userId}")
+    public String changeRole(@PathVariable Long userId) {
 
         User user = userService.findById(userId);
         userService.save(userService.changeRole(user));
@@ -36,8 +37,8 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @PostMapping("/admin/user/ban")
-    public String banUser(Long userId) {
+    @PostMapping("/admin/user/ban/{userId}")
+    public String banUser(@PathVariable Long userId) {
 
         User user = userService.findById(userId);
         userService.save(userService.banUser(user));

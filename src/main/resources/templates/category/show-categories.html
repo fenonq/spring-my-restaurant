@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head-links :: head-links}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<!--/*@thymesVar id="dish" type="com.fenonq.spring.myrestaurant.model.Dish"*/-->
+<!--/*@thymesVar id="category" type="com.fenonq.spring.myrestaurant.model.Category"*/-->
+<div class="table_wrapper">
+    <p class="table_title" th:text="#{dishes.header.allDishes}">
+        All dishes
+    </p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>№</th>
+            <th th:text="#{dishes.table.photo}">Photo</th>
+            <th th:text="#{dishes.table.name}">Name</th>
+            <th th:text="#{dishes.table.status}">Status</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}">Id</td>
+            <td>
+                <img th:src="@{'img/' + ${category.image}}"
+                     class="cart_dish_img">
+            </td>
+            <td th:text="${category.localizations.get(#locale).name}">Name</td>
+            <td>
+                <form method="post" th:action="@{'/changeVisibility/category/' + ${category.id}}"
+                      class="form_button">
+                    <button type="submit" th:text="${category.visible} ?
+                     #{dishes.table.button.status.visible} :
+                     #{dishes.table.button.status.invisible}">
+                        Change
+                    </button>
+                </form>
+            </td>
+            <td>
+                <a th:href="@{'/update/category/' + ${category.id}}">
+                    <button type="button" th:text="#{dishes.table.button.update}">
+                        Update
+                    </button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="strip"></div>
+
+</body>
+</html>

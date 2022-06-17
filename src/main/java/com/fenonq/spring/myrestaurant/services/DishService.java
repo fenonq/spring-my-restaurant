@@ -8,4 +8,6 @@ public interface DishService extends CrudService<Dish, Long> {
     Page<Dish> findAll(Pageable pageable);
 
     Page<Dish> findAllByCategory(Long id, Pageable pageable);
+
+    Dish changeVisibility(Dish dish);
 }

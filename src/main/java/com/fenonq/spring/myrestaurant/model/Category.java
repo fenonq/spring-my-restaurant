@@ -24,6 +24,9 @@ public class Category extends BaseEntity {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "visible")
+    private boolean visible = true;
+
     @OneToMany(mappedBy = "category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     private Set<Dish> dishes = new HashSet<>();
 

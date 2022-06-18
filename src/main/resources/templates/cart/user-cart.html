@@ -32,7 +32,9 @@
                     <img th:src="@{'/img/' + ${item.key.image}}"
                          class="cart_dish_img"/>
                 </td>
-                <td th:text="${item.key.localizations.get(#locale).name}">Name</td>
+                <td th:text="${item.key.localizations.get(#locale)} ?
+                ${item.key.localizations.get(#locale).name} :
+                ${item.key.localizations.get(languages[0]).name}">Name</td>
                 <td th:text="${item.key.weight} + 'g'">Weight</td>
                 <td th:text="${item.key.price + '&#8372'}">Price</td>
                 <td>
@@ -61,16 +63,13 @@
     </div>
 
     <div class="strip"></div>
-    <!--        <div class="order_wrapper">-->
-    <!--            <fmt:message key="cart.info.totalPrice"/>-->
-    <!--            : ${sessionScope.totalPrice}-->
-    <!--            <pricetag:priceSign/>-->
-    <!--            <form action="${pageContext.request.contextPath}/account" method="post" class="order_button">-->
-    <!--                <button type="submit">-->
-    <!--                    <fmt:message key="cart.button.order"/>-->
-    <!--                </button>-->
-    <!--            </form>-->
-    <!--        </div>-->
+    <div class="order_wrapper">
+        <form th:action="@{/receipt/order}" method="post" class="order_button">
+            <button type="submit">
+                Order
+            </button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

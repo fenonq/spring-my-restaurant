@@ -30,7 +30,10 @@
                 <img th:src="@{'img/' + ${category.image}}"
                      class="cart_dish_img">
             </td>
-            <td th:text="${category.localizations.get(#locale).name}">Name</td>
+            <td th:text="${category.localizations.get(#locale)} ?
+                            ${category.localizations.get(#locale).name} :
+                            ${category.localizations.get(languages[0]).name}">Name
+            </td>
             <td>
                 <form method="post" th:action="@{'/changeVisibility/category/' + ${category.id}}"
                       class="form_button">

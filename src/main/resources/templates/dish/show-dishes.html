@@ -34,8 +34,14 @@
                 <img th:src="@{'img/' + ${dish.image}}"
                      class="cart_dish_img">
             </td>
-            <td th:text="${dish.localizations.get(#locale).name}">Name</td>
-            <td th:text="${dish.localizations.get(#locale).description}">Description</td>
+            <td th:text="${dish.localizations.get(#locale)} ?
+                   ${dish.localizations.get(#locale).name} :
+                   ${dish.localizations.get(languages[0]).name}">Name
+            </td>
+            <td th:text="${dish.localizations.get(#locale)} ?
+                   ${dish.localizations.get(#locale).description} :
+                   ${dish.localizations.get(languages[0]).description}">Description
+            </td>
             <td th:text="${dish.category.localizations.get(#locale).name}">Category</td>
             <td th:text="${dish.weight}">Weight</td>
             <td th:text="${dish.price}">Price</td>

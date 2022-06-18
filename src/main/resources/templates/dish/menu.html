@@ -83,9 +83,7 @@
 
                 <p class="dish_text dish_weight" th:text="${dish.weight} + 'g'"></p>
                 <p class="dish_text dish_price" th:text="${dish.price} + '&#8372'"></p>
-                <form action="${pageContext.request.contextPath}/cart" method="post">
-                    <input name="id" style="display: none" value="${dish.id}">
-                    <input value="1" name="count" style="display: none">
+                <form th:action="@{'/cart/add/' + ${dish.id}}" method="post">
                     <button type="submit"
                             class="dish_button"
                             th:text="#{menu.button.add}">

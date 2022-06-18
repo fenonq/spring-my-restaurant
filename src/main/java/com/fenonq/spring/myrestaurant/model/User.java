@@ -5,14 +5,16 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(callSuper = true)
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -50,10 +52,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles = new HashSet<>();
 
-//    @ManyToMany
-//    @JoinTable(name = "customer_cart",
-//            joinColumns = @JoinColumn(name = "customer_id"),
-//            inverseJoinColumns = @JoinColumn(name = "dish_id"))
-//    private List<Dish> cart = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "customer_cart",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "dish_id"))
+    private List<Dish> cart = new ArrayList<>();
 
 }

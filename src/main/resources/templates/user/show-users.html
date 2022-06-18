@@ -27,14 +27,14 @@
             <td th:text="${user.surname}"></td>
             <td th:text="${user.username}"></td>
             <td>
-                <form method="post" th:action="@{'/admin/user/changeRole/' + ${user.id}}">
+                <form method="post" th:action="@{'/user/changeRole/' + ${user.id}}">
                     <button type="submit" th:text="${user.roles.iterator().next()}">
                         Submit
                     </button>
                 </form>
             </td>
             <td>
-                <form method="post" th:action="@{'/admin/user/ban/' + ${user.id}}" class="form_button">
+                <form method="post" th:action="@{'/user/ban/' + ${user.id}}" class="form_button">
                     <button type="submit" th:text="${user.active} ? #{admin.users.ban} : #{admin.users.unban}">
                         Submit
                     </button>

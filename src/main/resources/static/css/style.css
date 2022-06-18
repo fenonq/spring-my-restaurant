@@ -373,3 +373,8 @@ textarea {
     margin-left: 50%;
     margin-top: 5%;
 }
+
+.dish_count{
+    display: flex;
+    gap: 5px;
+}

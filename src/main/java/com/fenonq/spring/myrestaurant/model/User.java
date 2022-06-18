@@ -45,7 +45,7 @@ public class User extends BaseEntity {
     private String password;
 
     @Column(name = "active")
-    private boolean active;
+    private boolean active = true;
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))

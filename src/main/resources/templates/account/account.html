@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head-links :: head-links}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="hello_wrapper">
+    <text th:text="#{account.greetings} + ', ' + ${user.name}">Hello</text>
+</div>
+<div class="settings_links">
+    <a th:href="@{/account/changePassword}" class="a_changepass" th:text="#{changePassword.header.changePassword}">
+        Change password
+    </a>
+    <a th:href="@{/dishes}" class="a_changepass" th:text="#{account.settings.redactor.dish}">
+        Dish redactor
+    </a>
+    <a th:href="@{/categories}" class="a_changepass" th:text="#{account.settings.redactor.category}">
+        Category redactor
+    </a>
+    <form th:action="@{/logout}" method="post" >
+        <input type="submit" th:value="#{account.settings.signOut}"/>
+    </form>
+</div>
+
+<div class="table_wrapper">
+    <p class="table_title" th:text="#{account.table.header.yourReceipts}">
+        Your receipts
+    </p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th th:text="#{account.table.status}">Status</th>
+            <th th:text="#{account.table.orderDate}">Order Date</th>
+            <th th:text="#{account.table.dishes}">Dishes</th>
+            <th th:text="#{account.table.totalPrice}">Total price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="receipt : ${user.receipts}">
+            <td>
+                <img th:src="@{'img/' + ${receipt.status.image}}"
+                     class="cart_dish_img">
+            </td>
+            <td th:text="${receipt.status.localizations.get(#locale)} ?
+                         ${receipt.status.localizations.get(#locale).name} :
+                         ${receipt.status.localizations.get(languages[0]).name}">Status Name
+            </td>
+            <td th:text="${#temporals.format(receipt.createDate,'dd-MM-yyyy HH:MM')}">Order Date</td>
+            <td>
+                <th:block th:each="receiptsDishesEl : ${receiptsDishes}">
+                    <th:block th:each="dishes : ${receiptsDishesEl.value}">
+                        <text th:text="${dishes.key.localizations.get(#locale).name} +
+                         ': ' + ${dishes.key.price} + '&#8372' + ' * ' + ${dishes.value}"></text>
+                        <br>
+                    </th:block>
+                </th:block>
+            </td>
+            <td th:text="${receipt.totalPrice} + '&#8372'">TotalPrice</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

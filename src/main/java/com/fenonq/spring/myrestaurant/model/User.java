@@ -5,16 +5,13 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = "receipts")
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -46,6 +43,11 @@ public class User extends BaseEntity {
 
     @Column(name = "active")
     private boolean active = true;
+
+    @OneToMany(mappedBy = "customer",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            orphanRemoval = true)
+    private Set<Receipt> receipts = new HashSet<>();
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))

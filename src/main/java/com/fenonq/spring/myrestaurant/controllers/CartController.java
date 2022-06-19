@@ -21,21 +21,12 @@ import java.util.stream.Collectors;
 @Controller
 public class CartController {
 
-    private final ReceiptService receiptService;
     private final UserService userService;
     private final DishService dishService;
 
-    public CartController(ReceiptService receiptService, UserService userService, DishService dishService) {
-        this.receiptService = receiptService;
+    public CartController(UserService userService, DishService dishService) {
         this.userService = userService;
         this.dishService = dishService;
-    }
-
-    // Перенести в ReceiptsController
-    @GetMapping("/receipts")
-    public String showAllReceipts(Model model) {
-        model.addAttribute("receipts", receiptService.findAll());
-        return "---/show-receipts";
     }
 
     @GetMapping("/cart/user")

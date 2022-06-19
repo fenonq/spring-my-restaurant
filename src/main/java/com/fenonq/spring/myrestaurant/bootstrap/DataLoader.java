@@ -11,19 +11,11 @@ import java.util.Locale;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private final DishService dishService;
     private final CategoryService categoryService;
-    private final UserService accountService;
-    private final ReceiptService receiptService;
     private final StatusService statusService;
 
-    public DataLoader(DishService dishService, CategoryService categoryService,
-                      UserService accountService, ReceiptService receiptService,
-                      StatusService statusService) {
-        this.dishService = dishService;
+    public DataLoader(CategoryService categoryService, StatusService statusService) {
         this.categoryService = categoryService;
-        this.accountService = accountService;
-        this.receiptService = receiptService;
         this.statusService = statusService;
     }
 
@@ -31,28 +23,6 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Locale ua = Locale.forLanguageTag("uk-UA");
         Locale en = Locale.UK;
-
-//        Account customer =
-//                Account
-//                        .builder()
-//                        .name("Name")
-//                        .surname("Surname")
-//                        .login("customer")
-//                        .password("1234")
-//                        .role(Roles.CUSTOMER)
-//                        .build();
-//
-//        Account manager =
-//                Account
-//                        .builder()
-//                        .name("Name")
-//                        .surname("Surname")
-//                        .login("manager")
-//                        .password("1234")
-//                        .role(Roles.MANAGER)
-//                        .build();
-//
-//        accountService.save(manager);
 
         Status status =
                 Status
@@ -63,7 +33,7 @@ public class DataLoader implements CommandLineRunner {
                 LocalizedStatus
                         .builder()
                         .localizedId(new LocalizedId(en))
-                        .name("EnStatus")
+                        .name("New")
                         .status(status)
                         .build();
         status.getLocalizations().put(en, localizedStatus1);
@@ -72,7 +42,132 @@ public class DataLoader implements CommandLineRunner {
                 LocalizedStatus
                         .builder()
                         .localizedId(new LocalizedId(ua))
-                        .name("UaStatus")
+                        .name("Новий")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(ua, localizedStatus2);
+
+        statusService.save(status);
+
+        status =
+                Status
+                        .builder()
+                        .build();
+
+        localizedStatus1 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(en))
+                        .name("Accepted")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(en, localizedStatus1);
+
+        localizedStatus2 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(ua))
+                        .name("Прийнято")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(ua, localizedStatus2);
+
+        statusService.save(status);
+
+        status =
+                Status
+                        .builder()
+                        .build();
+
+        localizedStatus1 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(en))
+                        .name("Cooking")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(en, localizedStatus1);
+
+        localizedStatus2 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(ua))
+                        .name("Готується")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(ua, localizedStatus2);
+
+        statusService.save(status);
+
+        status =
+                Status
+                        .builder()
+                        .build();
+
+        localizedStatus1 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(en))
+                        .name("Delivering")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(en, localizedStatus1);
+
+        localizedStatus2 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(ua))
+                        .name("Доставляється")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(ua, localizedStatus2);
+
+        statusService.save(status);
+
+        status =
+                Status
+                        .builder()
+                        .build();
+
+        localizedStatus1 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(en))
+                        .name("Done")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(en, localizedStatus1);
+
+        localizedStatus2 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(ua))
+                        .name("Готово")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(ua, localizedStatus2);
+
+        statusService.save(status);
+
+        status =
+                Status
+                        .builder()
+                        .build();
+
+        localizedStatus1 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(en))
+                        .name("Canceled")
+                        .status(status)
+                        .build();
+        status.getLocalizations().put(en, localizedStatus1);
+
+        localizedStatus2 =
+                LocalizedStatus
+                        .builder()
+                        .localizedId(new LocalizedId(ua))
+                        .name("Відмінено")
                         .status(status)
                         .build();
         status.getLocalizations().put(ua, localizedStatus2);
@@ -369,20 +464,5 @@ public class DataLoader implements CommandLineRunner {
         categoryService.save(category2);
         categoryService.save(category3);
 
-//        customer.getCart().add(bograch);
-//        accountService.save(customer);
-//
-//        Receipt receipt =
-//                Receipt
-//                        .builder()
-//                        .customer(customer)
-//                        .manager(manager)
-//                        .totalPrice(123)
-//                        .createDate(LocalDateTime.now())
-//                        .status(status)
-//                        .build();
-//        receipt.getDishes().add(bograch);
-//        receipt.getDishes().add(bograch);
-//        receiptService.save(receipt);
     }
 }

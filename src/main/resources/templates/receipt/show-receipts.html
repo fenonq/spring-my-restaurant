@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head-links :: head-links}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="table_wrapper">
+    <p class="table_title" th:text="#{receipt.table.select.allReceipts}">
+        All receipts
+    </p>
+    <div class="filter_wrapper">
+        <form class="filter_form">
+            <select name="statusId" class="filter-select">
+                <option value="0"
+                        th:selected="${param.get('statusId') == null or param.get('statusId').toString() == '0'}"
+                        th:text="#{receipt.table.select.allReceipts}">
+                    All receipts
+                </option>
+
+                <option th:each="status : ${statuses}"
+                        th:text="${status.localizations.get(#locale).name}"
+                        th:value="${status.id}"
+                        th:selected="${param.get('statusId')} ?
+                                     ${param.get('statusId').toString() == status.id.toString()}">
+                    Status
+                </option>
+                <option th:value="${statuses.size() + 1}"
+                        th:text="#{receipt.table.select.accepted}"
+                        th:selected="${param.get('statusId')} ?
+                                     ${param.get('statusId').toString() == (statuses.size() + 1).toString()}">
+                    Accepted by me
+                </option>
+            </select>
+            <button type="submit" th:text="#{menu.select.filter.button}">
+                Submit
+            </button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>№</th>
+            <th th:text="#{receipt.table.customer}">Customer</th>
+            <th th:text="#{receipt.table.manager}">Manager</th>
+            <th th:text="#{receipt.table.status}">Status</th>
+            <th th:text="#{receipt.table.createDate}">Date</th>
+            <th th:text="#{receipt.table.dishes}">Dishes</th>
+            <th th:text="#{receipt.table.totalPrice}">Total price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="receipt : ${receipts}">
+            <td th:text="${receipt.id}">Id</td>
+            <td th:text="${receipt.customer.username}">User</td>
+            <td th:text="${receipt.manager} ?
+                ${receipt.manager.username}">Manager
+            </td>
+            <td>
+                <!--                <c:if test="${receipt.status.id != 5 && receipt.status.id != 0 &&-->
+                <!--                                     (receipt.managerId == 0 || receipt.managerId == user.id)}">-->
+                <form method="post" th:action="@{'/receipt/nextStatus/' + ${receipt.id}}">
+                    <button th:text="${receipt.status.localizations.get(#locale)} ?
+                                     ${receipt.status.localizations.get(#locale).name} :
+                                     ${receipt.status.localizations.get(languages[0]).name}"
+                            th:class="${receipt.manager} ?
+                                     (${receipt.manager.id != manager.id} ? 'disabled')"
+                            type="submit">
+                        Change
+                    </button>
+                </form>
+            </td>
+
+            <td th:text="${#temporals.format(receipt.createDate,'dd-MM-yyyy HH:MM')}">CreateDate</td>
+
+            <td>
+                <th:block th:each="receiptsDishesEl : ${receiptsDishes}">
+                    <th:block th:each="dishes : ${receiptsDishesEl.value}">
+                        <text th:text="${dishes.key.localizations.get(#locale).name} +
+                         ': ' + ${dishes.key.price} + '&#8372' + ' * ' + ${dishes.value}"></text>
+                        <br>
+                    </th:block>
+                </th:block>
+            </td>
+
+            <td th:text="${receipt.totalPrice} + '&#8372'">TotalPrice</td>
+            <td>
+                <form method="post" th:action="@{'/receipt/cancel/' + ${receipt.id}}"
+                      class="form_button">
+                    <button type="submit"
+                            th:style="${receipt.manager} ?
+                             (${receipt.manager.id != manager.id} ? 'display: none')
+                              : 'display: none'"
+                            th:text="${receipt.status.id == 6} ?
+                            #{receipt.table.button.renew} :
+                            #{receipt.table.button.cancel}">
+                        Cancel
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

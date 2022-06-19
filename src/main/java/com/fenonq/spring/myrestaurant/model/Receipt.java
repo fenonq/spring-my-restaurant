@@ -17,13 +17,14 @@ public class Receipt extends BaseEntity {
 
     @Builder
     public Receipt(Long id, User customer, User manager, Status status,
-                   int totalPrice, LocalDateTime createDate) {
+                   int totalPrice, LocalDateTime createDate, List<Dish> dishes) {
         super(id);
         this.customer = customer;
         this.manager = manager;
         this.status = status;
         this.totalPrice = totalPrice;
         this.createDate = createDate;
+        this.dishes = new ArrayList<>(dishes);
     }
 
     @ManyToOne

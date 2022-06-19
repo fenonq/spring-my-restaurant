@@ -59,8 +59,6 @@
                 ${receipt.manager.username}">Manager
             </td>
             <td>
-                <!--                <c:if test="${receipt.status.id != 5 && receipt.status.id != 0 &&-->
-                <!--                                     (receipt.managerId == 0 || receipt.managerId == user.id)}">-->
                 <form method="post" th:action="@{'/receipt/nextStatus/' + ${receipt.id}}">
                     <button th:text="${receipt.status.localizations.get(#locale)} ?
                                      ${receipt.status.localizations.get(#locale).name} :

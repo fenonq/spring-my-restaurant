@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -54,10 +53,10 @@ public class UserServiceImpl implements UserService {
         accountRepository.deleteById(id);
     }
 
-//    @Override
-//    public void clearUserCart(Long userId) {
-//        findById(userId).getCart().clear();
-//    }
+    @Override
+    public void clearUserCart(User user) {
+        user.getCart().clear();
+    }
 
     @Override
     public User findUserByUsername(String username) {

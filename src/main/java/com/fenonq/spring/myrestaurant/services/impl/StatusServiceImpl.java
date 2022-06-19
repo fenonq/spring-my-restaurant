@@ -5,8 +5,9 @@ import com.fenonq.spring.myrestaurant.repositories.StatusRepository;
 import com.fenonq.spring.myrestaurant.services.StatusService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class StatusServiceImpl implements StatusService {
@@ -19,7 +20,7 @@ public class StatusServiceImpl implements StatusService {
 
     @Override
     public Set<Status> findAll() {
-        Set<Status> statuses = new HashSet<>();
+        Set<Status> statuses = new TreeSet<>(Comparator.comparing(Status::getId));
         statusRepository.findAll().forEach(statuses::add);
         return statuses;
     }
@@ -42,5 +43,11 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public void deleteById(Long id) {
         statusRepository.deleteById(id);
+    }
+
+    @Override
+    public Status findByName(String name) {
+        String n = name.substring(0, 1).toUpperCase() + name.substring(1);
+        return statusRepository.findByName(n);
     }
 }

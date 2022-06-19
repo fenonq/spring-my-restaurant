@@ -9,10 +9,6 @@
 <main class="main">
     <h1 class="menu" th:text="#{index.welcome}">Welcome</h1>
 
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
-
     <div class="dishes_wrapper category_wrapper">
         <div class="dishes">
             <div th:each="category : ${categories}" class="dish category"

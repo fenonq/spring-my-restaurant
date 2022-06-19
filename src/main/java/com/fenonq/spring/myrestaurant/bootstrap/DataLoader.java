@@ -27,6 +27,7 @@ public class DataLoader implements CommandLineRunner {
         Status status =
                 Status
                         .builder()
+                        .image("new.png")
                         .build();
 
         LocalizedStatus localizedStatus1 =
@@ -52,6 +53,7 @@ public class DataLoader implements CommandLineRunner {
         status =
                 Status
                         .builder()
+                        .image("accepted.png")
                         .build();
 
         localizedStatus1 =
@@ -77,6 +79,7 @@ public class DataLoader implements CommandLineRunner {
         status =
                 Status
                         .builder()
+                        .image("cooking.png")
                         .build();
 
         localizedStatus1 =
@@ -102,6 +105,7 @@ public class DataLoader implements CommandLineRunner {
         status =
                 Status
                         .builder()
+                        .image("delivering.png")
                         .build();
 
         localizedStatus1 =
@@ -127,6 +131,7 @@ public class DataLoader implements CommandLineRunner {
         status =
                 Status
                         .builder()
+                        .image("done.png")
                         .build();
 
         localizedStatus1 =
@@ -152,6 +157,7 @@ public class DataLoader implements CommandLineRunner {
         status =
                 Status
                         .builder()
+                        .image("canceled.png")
                         .build();
 
         localizedStatus1 =

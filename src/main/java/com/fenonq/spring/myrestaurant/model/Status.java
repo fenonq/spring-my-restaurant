@@ -16,13 +16,13 @@ import java.util.*;
 public class Status extends BaseEntity {
 
     @Builder
-    public Status(Long id, Byte[] image) {
+    public Status(Long id, String image) {
         super(id);
         this.image = image;
     }
 
-    @Lob
-    private Byte[] image;
+    @Column(name = "image")
+    private String image;
 
     @OneToMany(mappedBy = "status", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     private Set<Receipt> receipts = new HashSet<>();

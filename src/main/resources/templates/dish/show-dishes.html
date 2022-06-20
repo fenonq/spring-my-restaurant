@@ -9,7 +9,7 @@
 
 <!--/*@thymesVar id="dish" type="com.fenonq.spring.myrestaurant.model.Dish"*/-->
 <!--/*@thymesVar id="category" type="com.fenonq.spring.myrestaurant.model.Category"*/-->
-<div class="table_wrapper">
+<div class="table_wrapper creation_table">
     <p class="table_title" th:text="#{dishes.header.allDishes}">
         All dishes
     </p>
@@ -54,12 +54,6 @@
                         Change
                     </button>
                 </form>
-
-                <!--                <form method="post" th:action="@{'/admin/user/ban/' + ${user.id}}" class="form_button">-->
-                <!--                    <button type="submit" th:text="${user.active} ? #{admin.users.ban} : #{admin.users.unban}">-->
-                <!--                        Submit-->
-                <!--                    </button>-->
-                <!--                </form>-->
             </td>
             <td>
                 <a th:href="@{'/update/dish/' + ${dish.id}}">
@@ -71,9 +65,18 @@
         </tr>
         </tbody>
     </table>
+
+    <div class="strip"></div>
+
+    <div class="create_button">
+        <a th:href="@{/new/dish}">
+            <button th:text="#{dishes.table.button.create}">
+                Sub
+            </button>
+        </a>
+    </div>
 </div>
 
-<div class="strip"></div>
 
 </body>
 </html>

@@ -1,22 +1,26 @@
 package com.fenonq.spring.myrestaurant.bootstrap;
 
 import com.fenonq.spring.myrestaurant.model.*;
+import com.fenonq.spring.myrestaurant.model.enums.Roles;
 import com.fenonq.spring.myrestaurant.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.Locale;
 
-
+// додати мапінг по ролям, змінити хедер, додати адміна в бутстрап
 @Component
 public class DataLoader implements CommandLineRunner {
 
     private final CategoryService categoryService;
     private final StatusService statusService;
+    private final UserService userService;
 
-    public DataLoader(CategoryService categoryService, StatusService statusService) {
+    public DataLoader(CategoryService categoryService, StatusService statusService, UserService userService) {
         this.categoryService = categoryService;
         this.statusService = statusService;
+        this.userService = userService;
     }
 
     @Override
@@ -470,5 +474,43 @@ public class DataLoader implements CommandLineRunner {
         categoryService.save(category2);
         categoryService.save(category3);
 
+        User admin =
+                User
+                        .builder()
+                        .name("Admin")
+                        .surname("Admin")
+                        .active(true)
+                        .login("Admin")
+                        .password("Admin")
+                        .build();
+        admin.setRoles(Collections.singleton(Roles.ADMIN));
+
+        userService.save(admin);
+
+        User customer =
+                User
+                        .builder()
+                        .name("Customer")
+                        .surname("Customer")
+                        .active(true)
+                        .login("Customer")
+                        .password("Customer")
+                        .build();
+        customer.setRoles(Collections.singleton(Roles.CUSTOMER));
+
+        userService.save(customer);
+
+        User manager =
+                User
+                        .builder()
+                        .name("Manager")
+                        .surname("Manager")
+                        .active(true)
+                        .login("Manager")
+                        .password("Manager")
+                        .build();
+        manager.setRoles(Collections.singleton(Roles.MANAGER));
+
+        userService.save(manager);
     }
 }

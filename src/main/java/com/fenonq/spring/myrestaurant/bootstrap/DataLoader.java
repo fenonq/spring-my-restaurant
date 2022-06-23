@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Locale;
 
-// додати мапінг по ролям, змінити хедер, додати адміна в бутстрап
 @Component
 public class DataLoader implements CommandLineRunner {
 

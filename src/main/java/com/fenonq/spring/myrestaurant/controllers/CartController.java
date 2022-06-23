@@ -3,7 +3,6 @@ package com.fenonq.spring.myrestaurant.controllers;
 import com.fenonq.spring.myrestaurant.model.Dish;
 import com.fenonq.spring.myrestaurant.model.User;
 import com.fenonq.spring.myrestaurant.services.DishService;
-import com.fenonq.spring.myrestaurant.services.ReceiptService;
 import com.fenonq.spring.myrestaurant.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

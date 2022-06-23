@@ -64,6 +64,7 @@
 
     <div class="strip"></div>
     <div class="order_wrapper">
+        <text th:text="#{receipt.table.totalPrice} + ': ' + ${totalPrice} + '&#8372'">TotalPrice</text>
         <form th:action="@{/receipt/order}" method="post" class="order_button">
             <button type="submit">
                 Order

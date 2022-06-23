@@ -40,7 +40,14 @@ public class CartController {
                 .stream()
                 .collect(Collectors.groupingBy(dish -> dish, Collectors.counting())));
 
+        int totalPrice = 0;
+
+        for (Map.Entry<Dish, Long> entry : userCart.entrySet()) {
+            totalPrice += entry.getKey().getPrice() * entry.getValue();
+        }
+
         model.addAttribute("userCart", userCart);
+        model.addAttribute("totalPrice", totalPrice);
         return "cart/user-cart";
     }
 

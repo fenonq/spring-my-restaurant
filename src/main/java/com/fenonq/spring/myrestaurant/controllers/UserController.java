@@ -3,6 +3,9 @@ package com.fenonq.spring.myrestaurant.controllers;
 import com.fenonq.spring.myrestaurant.model.User;
 import com.fenonq.spring.myrestaurant.model.enums.Roles;
 import com.fenonq.spring.myrestaurant.services.UserService;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,11 +28,23 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+            return "redirect:/account";
+        }
         return "user/login";
     }
 
     @GetMapping("/registration")
     public String registration() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+            return "redirect:/account";
+        }
         return "user/registration";
     }
 
@@ -72,7 +87,9 @@ public class UserController {
     public String banUser(@PathVariable Long userId) {
 
         User user = userService.findById(userId);
-        userService.save(userService.banUser(user));
+        if (user.getRoles().iterator().next() != Roles.ADMIN) {
+            userService.save(userService.banUser(user));
+        }
 
         return "redirect:/users";
     }

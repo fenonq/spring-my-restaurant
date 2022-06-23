@@ -17,13 +17,14 @@ import java.util.*;
 public class User extends BaseEntity {
 
     @Builder
-    public User(Long id, String name, String login, String password, boolean active) {
+    public User(Long id, String name, String surname, String login, String password, boolean active) {
         super(id);
 
         this.username = login;
         this.password = password;
         this.active = active;
         this.name = name;
+        this.surname = surname;
     }
 
     @Pattern(regexp = "^([А-ЯІЄЇ][а-яієї]{1,23}|[A-Z][a-z]{1,23})$")

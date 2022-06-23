@@ -13,11 +13,30 @@
     <a class="main_page_link nav_item nav__link" th:href="@{/menu}">MyRestaurant</a>
 
     <ul class="nav">
-        <li class="nav_item">
-            <a class="nav__link" th:href="@{/new/dish}">test</a>
+        <li class="nav_item" th:style="${currentUser} ?
+                                      (${currentUser.roles.iterator().next().toString() != 'CUSTOMER'} ? 'display: none')">
+            <a class="nav__link" th:href="@{/menu}" th:text="#{menu.menu}">Menu</a>
         </li>
-        <li class="nav_item">
-            <a class="nav__link" th:href="@{/new/category}">test1</a>
+        <li class="nav_item" th:style="${currentUser} ?
+                                      (${currentUser.roles.iterator().next().toString() != 'CUSTOMER'} ? 'display: none') :
+                                       'display: none'">
+            <a class="nav__link" th:href="@{/cart/user}" th:text="#{header.cart}">Cart</a>
+        </li>
+        <li class="nav_item" th:style="${currentUser} ?
+                                      (${currentUser.roles.iterator().next().toString() != 'MANAGER'} ? 'display: none') :
+                                       'display: none'">
+            <a class="nav__link" th:href="@{/receipts}" th:text="#{header.receipts}">Receipts</a>
+        </li>
+        <li class="nav_item" th:style="${currentUser} ?
+                                      (${currentUser.roles.iterator().next().toString() != 'ADMIN'} ? 'display: none') :
+                                       'display: none'">
+            <a class="nav__link" th:href="@{/users}" th:text="#{header.users}">Users</a>
+        </li>
+        <li class="nav_item" th:style="${currentUser} ?: 'display: none'">
+            <a class="nav__link" th:href="@{/account}" th:text="#{header.account}">Account</a>
+        </li>
+        <li class="nav_item" th:style="${currentUser} ? 'display: none'">
+            <a class="nav__link" th:href="@{/login}" th:text="#{header.login}">Login</a>
         </li>
 
         <li class="locale_item">

@@ -1,5 +1,6 @@
 package com.fenonq.spring.myrestaurant.config;
 
+import com.fenonq.spring.myrestaurant.model.enums.Roles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -26,6 +27,12 @@ public class WebSecurityConfig {
                             try {
                                 authz
                                         .antMatchers("/registration", "/login", "/", "/menu").permitAll()
+                                        .antMatchers("/users", "/dishes", "/categories")
+                                        .hasAuthority(Roles.ADMIN.name())
+                                        .antMatchers("/receipts")
+                                        .hasAnyAuthority(Roles.ADMIN.name(), Roles.MANAGER.name())
+                                        .antMatchers("/cart/user")
+                                        .hasAuthority(Roles.CUSTOMER.name())
                                         .anyRequest().authenticated()
                                         .and()
                                         .formLogin()

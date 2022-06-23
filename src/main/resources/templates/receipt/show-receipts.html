@@ -89,8 +89,7 @@
                       class="form_button">
                     <button type="submit"
                             th:style="${receipt.manager} ?
-                             (${receipt.manager.id != manager.id} ? 'display: none')
-                              : 'display: none'"
+                             (${receipt.manager.id != manager.id} ? 'display: none')"
                             th:text="${receipt.status.id == 6} ?
                             #{receipt.table.button.renew} :
                             #{receipt.table.button.cancel}">

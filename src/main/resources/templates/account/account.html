@@ -15,18 +15,20 @@
     <a th:href="@{/account/changePassword}" class="a_changepass" th:text="#{changePassword.header.changePassword}">
         Change password
     </a>
-    <a th:href="@{/dishes}" class="a_changepass" th:text="#{account.settings.redactor.dish}">
+    <a th:href="@{/dishes}" class="a_changepass" th:text="#{account.settings.redactor.dish}"
+       th:style="${currentUser.roles.iterator().next().toString() != 'ADMIN'} ? 'display: none'">
         Dish redactor
     </a>
-    <a th:href="@{/categories}" class="a_changepass" th:text="#{account.settings.redactor.category}">
+    <a th:href="@{/categories}" class="a_changepass" th:text="#{account.settings.redactor.category}"
+       th:style="${currentUser.roles.iterator().next().toString() != 'ADMIN'} ? 'display: none'">
         Category redactor
     </a>
-    <form th:action="@{/logout}" method="post" >
+    <form th:action="@{/logout}" method="post">
         <input type="submit" th:value="#{account.settings.signOut}"/>
     </form>
 </div>
 
-<div class="table_wrapper">
+<div class="table_wrapper" th:style="${currentUser.roles.iterator().next().toString() != 'CUSTOMER'} ? 'display: none'">
     <p class="table_title" th:text="#{account.table.header.yourReceipts}">
         Your receipts
     </p>

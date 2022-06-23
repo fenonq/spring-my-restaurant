@@ -61,12 +61,7 @@
 
     <div class="dishes_wrapper">
         <div class="dishes">
-            <!--            <c:if test="${dish.isVisible == 1}">-->
             <div th:each="dish : ${dishes}" class="dish" th:style="${!dish.visible} ? 'display: none'">
-                <!--                <img th:src="@{'data:image/jpeg;base64,' + ${dish.image == null ?-->
-                <!--                 '' : encoder.getEncoder().encodeToString(dish?.image)}}"-->
-                <!--                     th:alt="${dish.id} + ' img'"-->
-                <!--                     class="dish_img">-->
 
                 <img th:src="@{'img/' + ${dish.image}}"
                      class="dish_img">
@@ -86,6 +81,8 @@
                 <form th:action="@{'/cart/add/' + ${dish.id}}" method="post">
                     <button type="submit"
                             class="dish_button"
+                            th:style="${currentUser} ?
+                                      (${currentUser.roles.iterator().next().toString() != 'CUSTOMER'} ? 'display: none')"
                             th:text="#{menu.button.add}">
                     </button>
                 </form>

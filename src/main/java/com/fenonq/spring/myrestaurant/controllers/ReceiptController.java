@@ -40,6 +40,7 @@ public class ReceiptController {
     @GetMapping("/receipts")
     public String showReceipts(Model model, Authentication authentication,
                                @RequestParam(required = false) Long statusId) {
+        log.info("Showing receipts...");
         User manager = userService.findUserByUsername(authentication.getName());
         Set<Status> statuses = statusService.findAll();
         Set<Receipt> receipts;
@@ -79,6 +80,7 @@ public class ReceiptController {
 
     @PostMapping("/receipt/order")
     public String makeOrder(Authentication authentication) {
+        log.info("Creating order");
         User user = userService.findUserByUsername(authentication.getName());
         int totalPrice =
                 user.getCart()
@@ -104,6 +106,7 @@ public class ReceiptController {
 
     @PostMapping("/receipt/nextStatus/{receiptId}")
     public String nextReceiptStatus(@PathVariable Long receiptId, Authentication authentication) {
+        log.info("Changing receipt status");
         User manager = userService.findUserByUsername(authentication.getName());
         Receipt receipt = receiptService.findById(receiptId);
 
@@ -130,6 +133,7 @@ public class ReceiptController {
 
     @PostMapping("/receipt/cancel/{receiptId}")
     public String cancelReceipt(@PathVariable Long receiptId, Authentication authentication) {
+        log.info("Canceling receipt");
         User manager = userService.findUserByUsername(authentication.getName());
         Receipt receipt = receiptService.findById(receiptId);
 

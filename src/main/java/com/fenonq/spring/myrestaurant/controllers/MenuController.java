@@ -4,6 +4,7 @@ import com.fenonq.spring.myrestaurant.model.Dish;
 import com.fenonq.spring.myrestaurant.services.CategoryService;
 import com.fenonq.spring.myrestaurant.services.DishService;
 import com.fenonq.spring.myrestaurant.utils.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Slf4j
 @Controller
 public class MenuController {
 
@@ -28,6 +30,7 @@ public class MenuController {
     public String menu(Model model,
                        @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, value = 8) Pageable pageable,
                        @RequestParam(required = false) Long categoryId) {
+        log.info("Showing menu...");
         model.addAttribute("dishProperties", Constants.dishProperties);
         model.addAttribute("categories", categoryService.findAll());
 

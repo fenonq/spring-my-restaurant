@@ -9,6 +9,7 @@ import com.fenonq.spring.myrestaurant.services.CategoryService;
 import com.fenonq.spring.myrestaurant.services.DishService;
 import com.fenonq.spring.myrestaurant.utils.Constants;
 import com.fenonq.spring.myrestaurant.utils.FileUpload;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @Controller
 public class DishController {
 
@@ -37,12 +39,14 @@ public class DishController {
 
     @GetMapping("/dishes")
     public String showAllDishes(Model model) {
+        log.info("Showing dishes...");
         model.addAttribute("dishes", dishService.findAll());
         return "dish/show-dishes";
     }
 
     @PostMapping("/changeVisibility/dish/{dishId}")
     public String changeVisibility(@PathVariable Long dishId) {
+        log.info("Changing dish visibility");
         Dish dish = dishService.findById(dishId);
         dishService.changeVisibility(dish);
         dishService.save(dish);
@@ -51,6 +55,7 @@ public class DishController {
 
     @GetMapping("/new/dish")
     public String newDishForm(Model model) {
+        log.info("Creating dish");
         model.addAttribute("dish", Dish.builder().build());
         model.addAttribute("categories", categoryService.findAll());
 
@@ -66,6 +71,7 @@ public class DishController {
 
     @GetMapping("/update/dish/{id}")
     public String updateDish(@PathVariable Long id, Model model) {
+        log.info("Updating dish");
         Dish dish = dishService.findById(id);
 
         model.addAttribute("dish", dish);
@@ -123,6 +129,7 @@ public class DishController {
         categoryService.save(category);
         dishService.save(dish);
 
+        log.info("Dish was created/updated");
         return "redirect:/menu";
     }
 }

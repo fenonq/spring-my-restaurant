@@ -4,6 +4,7 @@ import com.fenonq.spring.myrestaurant.model.Dish;
 import com.fenonq.spring.myrestaurant.model.Receipt;
 import com.fenonq.spring.myrestaurant.model.User;
 import com.fenonq.spring.myrestaurant.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 public class AccountController {
 
@@ -31,6 +33,7 @@ public class AccountController {
 
     @GetMapping("/account")
     public String showAccount(Model model, Authentication authentication) {
+        log.info("Showing account...");
         User user = userService.findUserByUsername(authentication.getName());
 
         Map<Receipt, Map<Dish, Long>> receiptsDishes = new TreeMap<>(Comparator.comparing(Receipt::getId));
@@ -54,6 +57,7 @@ public class AccountController {
 
     @GetMapping("/account/changePassword")
     public String changePasswordForm() {
+        log.info("Changing password");
         return "account/change-password-form";
     }
 
@@ -70,6 +74,7 @@ public class AccountController {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userService.save(user);
+        log.info("Password was changed");
         return "redirect:/account";
     }
 }

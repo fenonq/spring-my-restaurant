@@ -9,6 +9,7 @@ import com.fenonq.spring.myrestaurant.services.CategoryService;
 import com.fenonq.spring.myrestaurant.services.DishService;
 import com.fenonq.spring.myrestaurant.utils.Constants;
 import com.fenonq.spring.myrestaurant.utils.FileUpload;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 
+@Slf4j
 @Controller
 public class CategoryController {
 
@@ -33,12 +35,14 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public String showAllDishes(Model model) {
+        log.info("Showing categories...");
         model.addAttribute("categories", categoryService.findAll());
         return "category/show-categories";
     }
 
     @PostMapping("/changeVisibility/category/{categoryId}")
     public String changeVisibility(@PathVariable Long categoryId) {
+        log.info("Changing category visibility");
         Category category = categoryService.findById(categoryId);
         categoryService.changeVisibility(category);
         Set<Dish> categoryDishes = category.getDishes();
@@ -49,6 +53,7 @@ public class CategoryController {
 
     @GetMapping("/new/category")
     public String newCategoryForm(Model model) {
+        log.info("Creating category");
         model.addAttribute("category", Category.builder().build());
 
         LocalizedCategoriesCreationDto localizedCategories = new LocalizedCategoriesCreationDto();
@@ -63,6 +68,7 @@ public class CategoryController {
 
     @GetMapping("/update/category/{id}")
     public String updateCategory(@PathVariable Long id, Model model) {
+        log.info("Updating category");
         Category category = categoryService.findById(id);
 
         model.addAttribute("category", category);
@@ -104,6 +110,7 @@ public class CategoryController {
 
         categoryService.save(category);
 
+        log.info("Category was created/updated");
         return "redirect:/menu";
     }
 }

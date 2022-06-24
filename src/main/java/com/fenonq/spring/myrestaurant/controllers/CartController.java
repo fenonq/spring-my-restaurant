@@ -4,6 +4,7 @@ import com.fenonq.spring.myrestaurant.model.Dish;
 import com.fenonq.spring.myrestaurant.model.User;
 import com.fenonq.spring.myrestaurant.services.DishService;
 import com.fenonq.spring.myrestaurant.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 public class CartController {
 
@@ -30,6 +32,7 @@ public class CartController {
 
     @GetMapping("/cart/user")
     public String showUserCart(Authentication authentication, Model model) {
+        log.info("Showing user cart...");
         User user = userService.findUserByUsername(authentication.getName());
         List<Dish> userCatList = user.getCart();
 
@@ -52,6 +55,7 @@ public class CartController {
 
     @PostMapping("/cart/add/{dishId}")
     public String changeCountOfDishes(@PathVariable Long dishId, Authentication authentication) {
+        log.info("Adding dish to cart");
         User user = userService.findUserByUsername(authentication.getName());
         Dish dish = dishService.findById(dishId);
 
@@ -63,6 +67,7 @@ public class CartController {
 
     @PostMapping("/cart/remove/{dishId}")
     public String removeDishFromUserCart(@PathVariable Long dishId, Authentication authentication) {
+        log.info("Removing dish from cart");
         User user = userService.findUserByUsername(authentication.getName());
 
         user.getCart().remove(dishService.findById(dishId));

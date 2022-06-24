@@ -3,12 +3,14 @@ package com.fenonq.spring.myrestaurant.bootstrap;
 import com.fenonq.spring.myrestaurant.model.*;
 import com.fenonq.spring.myrestaurant.model.enums.Roles;
 import com.fenonq.spring.myrestaurant.services.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Locale;
 
+@Slf4j
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -24,6 +26,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.info("Data is loading...");
         Locale ua = Locale.forLanguageTag("uk-UA");
         Locale en = Locale.UK;
 
@@ -511,5 +514,7 @@ public class DataLoader implements CommandLineRunner {
         manager.setRoles(Collections.singleton(Roles.MANAGER));
 
         userService.save(manager);
+
+        log.info("Data loaded");
     }
 }

@@ -1,6 +1,7 @@
 package com.fenonq.spring.myrestaurant.services.impl;
 
 import com.fenonq.spring.myrestaurant.model.Category;
+import com.fenonq.spring.myrestaurant.model.Dish;
 import com.fenonq.spring.myrestaurant.repositories.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -86,5 +87,16 @@ class CategoryServiceImplTest {
     void testDeleteById() {
         categoryService.deleteById(anyLong());
         verify(categoryRepository).deleteById(anyLong());
+    }
+
+    @Test
+    void testChangeVisibility() {
+        Category category = Category.builder().id(ID).build();
+
+        categoryService.changeVisibility(category);
+        assertEquals(category.isVisible(), Boolean.FALSE);
+
+        categoryService.changeVisibility(category);
+        assertEquals(category.isVisible(), Boolean.TRUE);
     }
 }

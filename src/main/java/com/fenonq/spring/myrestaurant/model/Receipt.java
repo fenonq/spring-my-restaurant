@@ -24,7 +24,12 @@ public class Receipt extends BaseEntity {
         this.status = status;
         this.totalPrice = totalPrice;
         this.createDate = createDate;
-        this.dishes = new ArrayList<>(dishes);
+
+        if (dishes != null) {
+            this.dishes = new ArrayList<>(dishes);
+        } else {
+            this.dishes = new ArrayList<>();
+        }
     }
 
     @ManyToOne

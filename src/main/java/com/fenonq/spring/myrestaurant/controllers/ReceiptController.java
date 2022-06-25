@@ -101,7 +101,7 @@ public class ReceiptController {
 
         userService.clearUserCart(user);
         userService.save(user);
-        return "redirect:/menu";
+        return "redirect:/account";
     }
 
     @PostMapping("/receipt/nextStatus/{receiptId}")

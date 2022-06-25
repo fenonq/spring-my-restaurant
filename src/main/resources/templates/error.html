@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head-links :: head-links}">
+    <meta charset="UTF-8">
+    <title th:text="#{title.categories}">Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<h1 class="err_type" th:text="#{error.error}"></h1>
+<h2 class="err_type" th:text="#{error.message}"></h2>
+</body>
+</html>

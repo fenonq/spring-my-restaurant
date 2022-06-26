@@ -13,8 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -89,5 +88,17 @@ class StatusServiceImplTest {
     void testDeleteById() {
         statusService.deleteById(anyLong());
         verify(statusRepository).deleteById(anyLong());
+    }
+
+    @Test
+    void testFindByName() {
+        Status status = Status.builder().id(ID).build();
+
+        when(statusRepository.findByName(anyString())).thenReturn(status);
+
+        Status statusReturned = statusService.findByName("test");
+
+        assertNotNull(statusReturned);
+        verify(statusRepository).findByName(anyString());
     }
 }

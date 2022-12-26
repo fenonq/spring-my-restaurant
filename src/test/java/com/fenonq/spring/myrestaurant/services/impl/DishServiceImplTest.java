@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
@@ -107,7 +108,7 @@ class DishServiceImplTest {
 
         when(dishRepository.findAll(any())).thenReturn(dishes);
 
-        Page<Dish> dishesReturned = dishService.findAll(any());
+        Page<Dish> dishesReturned = dishService.findAll(Pageable.unpaged());
 
         assertNotNull(dishesReturned);
         verify(dishRepository).findAll(any());
@@ -127,7 +128,7 @@ class DishServiceImplTest {
         when(dishRepository.findAllByCategory(any(), any())).thenReturn(dishes);
         when(categoryRepository.findById(anyLong())).thenReturn(categoryOptional);
 
-        Page<Dish> dishesReturned = dishService.findAllByCategory(ID, any());
+        Page<Dish> dishesReturned = dishService.findAllByCategory(ID, Pageable.unpaged());
 
         assertNotNull(dishesReturned);
         verify(dishRepository).findAllByCategory(any(), any());

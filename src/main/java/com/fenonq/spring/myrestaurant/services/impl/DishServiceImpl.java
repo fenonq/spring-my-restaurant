@@ -6,12 +6,15 @@ import com.fenonq.spring.myrestaurant.repositories.CategoryRepository;
 import com.fenonq.spring.myrestaurant.repositories.DishRepository;
 import com.fenonq.spring.myrestaurant.services.DishService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Service
 public class DishServiceImpl implements DishService {
@@ -56,13 +59,17 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Page<Dish> findAll(Pageable pageable) {
-        return dishRepository.findAll(pageable);
+        Page<Dish> pageableDishes = dishRepository.findAll(pageable);
+        List<Dish> distinctDishes = pageableDishes.stream().distinct().collect(Collectors.toList());
+        return new PageImpl<>(distinctDishes, pageable, distinctDishes.size());
     }
 
     @Override
     public Page<Dish> findAllByCategory(Long id, Pageable pageable) {
         Category category = categoryRepository.findById(id).orElse(null);
-        return dishRepository.findAllByCategory(category, pageable);
+        Page<Dish> pageableDishesByCategory = dishRepository.findAllByCategory(category, pageable);
+        List<Dish> distinctDishes = pageableDishesByCategory.stream().distinct().collect(Collectors.toList());
+        return new PageImpl<>(distinctDishes, pageable, distinctDishes.size());
     }
 
     @Override

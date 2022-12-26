@@ -25,7 +25,7 @@ public class DataLoader implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.info("Data is loading...");
         Locale ua = Locale.forLanguageTag("uk-UA");
         Locale en = Locale.UK;
@@ -482,8 +482,8 @@ public class DataLoader implements CommandLineRunner {
                         .name("Admin")
                         .surname("Admin")
                         .active(true)
-                        .login("Admin")
-                        .password("Admin")
+                        .login("admin")
+                        .password("admin")
                         .build();
         admin.setRoles(Collections.singleton(Roles.ADMIN));
 
@@ -495,8 +495,8 @@ public class DataLoader implements CommandLineRunner {
                         .name("Customer")
                         .surname("Customer")
                         .active(true)
-                        .login("Customer")
-                        .password("Customer")
+                        .login("customer")
+                        .password("customer")
                         .build();
         customer.setRoles(Collections.singleton(Roles.CUSTOMER));
 
@@ -508,8 +508,8 @@ public class DataLoader implements CommandLineRunner {
                         .name("Manager")
                         .surname("Manager")
                         .active(true)
-                        .login("Manager")
-                        .password("Manager")
+                        .login("manager")
+                        .password("manager")
                         .build();
         manager.setRoles(Collections.singleton(Roles.MANAGER));
 

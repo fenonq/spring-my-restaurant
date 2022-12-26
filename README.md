@@ -17,13 +17,13 @@ Data, Spring MVC, JUnit, Mockito, Lombok
 
 ###Credentials:
 ####admin<br/>
-username: Admin<br/>
-password: Admin
+username: admin<br/>
+password: admin
 
 ####manager<br/>
-username: Manager<br/>
-password: Manager
+username: manager<br/>
+password: manager
 
 ####customer<br/>
-username: Customer<br/>
-password: Customer
+username: customer<br/>
+password: customer

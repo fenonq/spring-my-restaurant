@@ -3,7 +3,7 @@
 
 The same project as https://github.com/fenonq/my-restaurant but made using spring-mvc.
 
-##Tasks performed:<br/>
+## Tasks performed:<br/>
 • Used Spring Data to communicate with database<br/>
 • It is possible to switch languages and store localized information in the database<br/>
 • Implemented authentication and authorization, delimitation of access rights of system users to software components by Spring Security<br/>
@@ -15,15 +15,15 @@ The same project as https://github.com/fenonq/my-restaurant but made using sprin
 CircleCI, Spring Boot, Spring Security, Spring
 Data, Spring MVC, JUnit, Mockito, Lombok
 
-###Credentials:
-####admin<br/>
+### Credentials:
+#### admin<br/>
 username: Admin<br/>
 password: Admin
 
-####manager<br/>
+#### manager<br/>
 username: Manager<br/>
 password: Manager
 
-####customer<br/>
+#### customer<br/>
 username: Customer<br/>
 password: Customer
